@@ -1,0 +1,295 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition template="plantillaCliente.xhtml">
+
+            <ui:define name="links">
+                <link rel="stylesheet" href="estilosCliente/estilos.css"></link>
+                <link href="../RecursosModulos/css/jquery.datetimepicker.css" rel="stylesheet" type="text/css"/>
+
+                <!--<script type="text/javascript">
+
+                    jQuery(function ($) {
+
+                        $('ul#items').easyPaginate({
+                            step: 3,
+                            auto: false,
+                            loop: true,
+                            clickstop: false,
+                            pause: 2000
+                        });
+
+                    });
+
+                </script>-->
+                <script>
+                    function precio(temp, palabra) {
+                        pcantidad = temp.value;
+                        pvalor = document.getElementById("formulario" + palabra + ":precioProduc").value;
+                        desc = document.getElementById("formulario" + palabra + ":descnt").value;
+                        precioTotal = (pcantidad * pvalor);
+                        precioConDescuento = ((precioTotal * desc) / 100);
+                        document.getElementById('precioPedido' + palabra).value = precioConDescuento;
+                    }
+                </script>
+
+            </ui:define>
+
+
+            <ui:define name="tituloPag">
+                <title>Ofertas | Effective Orders</title>
+            </ui:define>
+
+            <ui:define name="menuOfertas">
+                <li class="current">
+                    <a class="current" href="ofertas.xhtml">
+                        <span class="badge pull-right">#{controladorOferta.contarOfertas()}</span>
+                        <i class="fa fa-usd"></i> Ofertas
+                    </a>
+                </li>
+            </ui:define>
+
+            <ui:define name="nombrePagina">
+                <h1><i class="fa fa-usd"></i> Ofertas</h1>
+            </ui:define>
+
+            <ui:define name="migasPan">
+                <li><a href="index.xhtml">Inicio</a></li>
+                <li><a href="solicitarPedido.xhtml">Solicitar pedidos</a></li>
+                <li class="active">Ofertas</li>
+            </ui:define>
+
+            <ui:define name="contenido">                                   
+
+
+                <c:if test="#{controladorPedido.estados==1}">
+                    <div  class="alert-box success" style="height:50px; margin-left: 60px"><span>Registrado : &nbsp;</span><strong>Su solicitud de pedido fue generada exitosamente .</strong></div>
+                </c:if>
+
+                <c:if test="#{controladorPedido.estados==2}">
+                    <div  class="alert-box warning" style="height:50px; margin-left: 60px"><span>No registrado : &nbsp;</span><strong>Su solicitud de pedido no fue generada.</strong></div>
+                </c:if>
+                <legend>Ofertas</legend>
+                <div id="container">
+                    <ul id="items">
+                        <c:forEach var="ofertas" items="#{controladorOferta.listarOfertas()}">
+                            <c:if test="#{ofertas.estado.equalsIgnoreCase('Publicado')}">
+                                <li style="margin-right: 15px;">
+
+                                    <!--OFERTA-->
+                                    <div class="#{ofertas.descuento le 20 ? 'panel panel-warning':'' or ofertas.descuento ge 20 and ofertas.descuento le 50 ? 'panel panel-info':'' or ofertas.descuento ge 50 ? 'panel panel-danger':''}" style="text-align: center; ">
+                                        <div class="panel-heading">
+                                            <h3 class="panel-title"><b>#{ofertas.descuento}% DE DESCUENTO </b>
+                                            </h3>
+                                        </div>
+                                        <div class="panel-body" >
+                                            <c:if test="#{ofertas.codigoProducto.nombreProducto.equalsIgnoreCase('Pitaya')}">
+                                                <div id="pitaya">
+                                                    <img class="img-responsive" src="../RecursosModulos/images/productos/pitaya.png"></img>
+                                                </div>
+                                            </c:if>
+
+                                            <c:if test="#{ofertas.codigoProducto.nombreProducto.equalsIgnoreCase('Guanabana')}">
+                                                <div id="guanabana" style="padding-bottom: 3px">
+                                                    <br></br>
+                                                    <img class="img-responsive" src="../RecursosModulos/images/productos/guanabana.png"></img>
+                                                    <br></br>
+                                                </div>
+                                            </c:if>
+
+                                            <c:if test="#{ofertas.codigoProducto.nombreProducto.equalsIgnoreCase('Aguacate')}">
+                                                <div id="aguacate">
+                                                    <img class="img-responsive" src="../RecursosModulos/images/productos/aguacate.png"></img>
+                                                </div>
+                                            </c:if>
+
+                                            <div id="texto">
+                                                <br></br>Aprovecha esta promoción. Solicita tu pedido ahora.<br></br><br></br>
+                                                <h:form>
+                                                    <!-- <button  type="button" class="btn btn-default btn-lg btn-block" data-toggle="modal" data-target="#oferta">
+                                                         <span class="fa fa-shopping-cart" ></span> Solicitar
+                                                         <h:commandLink target="#{controladorPedido.ofertas}" value="#{ofertas}" ></h:commandLink>
+                                                     </button>-->
+
+                                                    <h:commandLink value="Solicitar"
+                                                                   onclick="$('#oferta#{ofertas.idOferta}').modal('show');
+                                                                           return false;"  class="color1">
+
+<!--<f:setPropertyActionListener target="#{controladorPedido.ofertas}" value="#{ofertas}"></f:setPropertyActionListener>-->
+                                                    </h:commandLink>
+                                                </h:form>
+
+                                            </div>
+                                        </div>
+
+                                        <div id="fechas" class="panel-heading">
+                                            <h3 class="panel-title">
+                                                <i class="fa fa-calendar-check-o"></i> Fecha inicio: #{controladorOferta.cambiarFechaFormato(ofertas.fechaInicio)} <br></br><br></br><i class="fa fa-calendar-times-o"></i> Fecha limite: #{controladorOferta.cambiarFechaFormato(ofertas.fechaFin)} <br></br>
+                                            </h3>
+                                        </div>
+                                    </div>
+                                </li>
+                            </c:if>
+                        </c:forEach>
+
+                        <!-- Modal -->
+                        <c:forEach var="ofertas" items="#{controladorOferta.listarOfertas()}">
+                            <div class="modal fade" id="oferta#{ofertas.idOferta}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                <div class="modal-content" role="document" style="width:900px; margin-left: 270px">
+                                    <div class="modal-content" >
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                            <h4 class="modal-title" id="myModalLabel">Solicitar pedido con #{ofertas.descuento} % de descuento</h4>
+                                        </div>
+                                        <div class="modal-body">
+
+                                            <h:form id="formulario" class="form-horizontal">
+
+                                                <!-- Cedula -->
+                                                <div class="form-group hidden">
+                                                    <label class="col-md-4 control-label" for="cedulaCliente">Cedula</label>  
+                                                    <div class="col-md-4">
+                                                        <input type="text" id="cedulaCliente" name="cedulaCliente" class="form-control input-md" readonly="true" value="#{controladorUsuario.objUsuarioLogin.idUsuario}"></input>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Producto-->
+                                                <div class="form-group">
+                                                    <label class="col-md-4 control-label" for="producto">Producto</label>  
+                                                    <div class="col-md-4">
+                                                        <input type="text" id="producto" name="producto" class="form-control input-md" readonly="true" value="#{ofertas.codigoProducto.codigoProducto}"></input>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label class="col-md-3 control-label" for="precioUnitario">Precio unitario: &nbsp; <span>#{ofertas.codigoProducto.precio}</span> </label>  
+                                                        <div class="col-md-2">
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                                <input type="text" id="codigoProducto" name="codigoProducto" class="form-control input-md hidden" readonly="true" value="#{ofertas.codigoProducto.codigoProducto}"></input>
+
+                                                <!-- Clasificacion producto -->
+                                                <div class="form-group">
+                                                    <label class="col-md-4 control-label" for="clasificacionProducto">Clasificación</label>
+                                                    <div class="col-md-4" required="true"> 
+                                                        <select id="clasificacionProducto" name="clasificacionProducto" class="form-control" required="true">
+                                                            <option selected="true" disabled="true">--Seleccione una clasificación--</option>
+                                                            <option value="Baja">Baja</option>
+                                                            <option value="Alta">Alta</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label class="col-md-4 control-label" for="descuento">Descuento</label>  
+                                                    <div class="col-md-4">
+                                                        <input type="text" id="descuento" name="descuento" class="form-control input-md" readonly="true" value="#{ofertas.descuento}"></input>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Precio -->
+                                                <div class="form-group">
+                                                    <label class="col-md-4 control-label" for="precioPedido">Precio con descuento</label>
+                                                    <div class="col-md-4"> 
+                                                        <label class="sr-only" for="precioPedido"> Precio (in COP)</label>
+                                                        <div class="input-group">
+                                                            <div class="input-group-addon">$</div>
+                                                            <input type="text" id="precioPedido#{ofertas.idOferta}" name="precioPedido" class="form-control"  placeholder="Precio Total" readonly="true" value="#{controladorPedido.calcularDescuento(ofertas.codigoProducto.precio, ofertas.descuento)}"></input>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Direccion -->
+                                                <div class="form-group">
+                                                    <label class="col-md-4 control-label" for="direccion">Dirección</label>  
+                                                    <div class="col-md-4">
+                                                        <input type="text" id="direccion" name="direccion" class="form-control input-md"></input>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label class="col-md-4 control-label" for="cantidad">Cantidad:</label>  
+                                                    <div class="col-md-4">
+                                                        <input type="text" id="cantidad" name="cantidad" class="form-control input-md"></input>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Fecha de Entrega -->
+                                                <div class="form-group">
+                                                    <label class="col-md-4 control-label" for="fechaE">Fecha de entrega:</label>  
+                                                    <div class="col-md-4">
+                                                        <input type="text" id="fechaE" name="fechaE" class="datetimepicker form-control input-md" required="true"></input>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Comentarios-->
+                                                <div class="form-group">
+                                                    <label class="col-md-4 control-label" for="comentariosPedido">Comentarios</label>
+                                                    <div class="col-md-4">                     
+                                                        <textarea class="form-control" id="comentariosPedido" name="comentariosPedido" placeholder="Escriba sus comentarios aquí" ></textarea>
+                                                    </div>
+                                                </div>
+
+                                                <h:inputText class="hidden" id="precioProduc" value="#{ofertas.codigoProducto.precio}"></h:inputText>    
+                                                <h:inputText class="hidden"  id="descnt" value="#{ofertas.descuento}"></h:inputText>
+                                                <!-- Boton -->
+                                                <div id="boton">
+                                                    <div class="form-group">
+                                                        <label class="col-md-4 control-label" for="boton"></label>
+                                                        <h:commandButton class="btn btn-submit" type="submit" action="#{controladorPedido.generarPedidoDescuento()}" value="Solicitar"></h:commandButton>
+                                                    </div>
+                                                </div>
+                                            </h:form>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </c:forEach>
+                        <!--FIN MODAL-->
+                    </ul>
+                </div>
+
+            </ui:define>
+
+            <ui:define name="scripts">
+                <script src="../RecursosModulos/js/jquery.datetimepicker.full.js" type="text/javascript"></script>
+                <script src="../RecursosModulos/js/bootstrap-datepicker.es.min.js" type="text/javascript"></script>
+                
+                <script>
+                                                                       $().ready(function () {
+                                                                           $('.datetimepicker').datetimepicker({
+                                                                               timepicker: false,
+                                                                               format: 'd/m/Y',
+                                                                               formatDate: 'Y/m/d',
+                                                                               minDate: '1+d', // yesterday is minimum date
+                                                                               daysOfWeekDisabled: '0',
+                                                                               beforeShowDay: function (day) {
+                                                                                   var day = day.getDay();
+                                                                                   if (day == 0 || day == 6) {
+                                                                                       return [false, "somecssclass"]
+                                                                                   } else {
+                                                                                       return [true, "someothercssclass"]
+                                                                                   }
+                                                                               }
+                                                                           });
+
+                                                                           $.datetimepicker.setLocale('es');
+
+
+                                                                       });
+                </script>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

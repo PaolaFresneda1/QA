@@ -1,0 +1,133 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <body>
+
+
+
+
+
+        <ui:composition template="./plantillaInterfazAdministrador.xhtml">
+
+            <ui:define name="tituloPag">
+                <title>Email |EffectiveOrders</title>
+            </ui:define>
+
+
+
+            <ui:define name="menuEmail">
+                <li class="current">
+                    <a href="email.xhtml">
+                        <span class="badge pull-right">24</span>
+                        <i class="icon-envelope"></i><span style="font-size: 14px;">E-mail</span> 
+                    </a>
+                </li>
+            </ui:define>
+
+            <ui:define name="nombrePagina">
+                <h1 style="font-size: 23px;"><i class="icon-bar-chart"></i> Gestión de Ofertas</h1>
+
+            </ui:define>
+            <ui:define name="links">
+                <link rel='stylesheet' href='assets/css/datatables/bootstrap.datatables.css'></link>
+                <link rel='stylesheet' href='assets/css/datatables/jquery.dataTables.css'></link>          
+            </ui:define>
+            <ui:define name="migasPan">
+                <li><a href="index.xhtml">Inicio</a></li>   
+                <li><a href="gestionDeUsuarios.xhtml">Gestion de Usuarios</a></li> 
+                <li class="active">Gestion de Ofertas</li>
+            </ui:define>
+
+            <ui:define name="contenido">
+                <div class="widget">
+                    <div class="widget-content-white glossed "  id="htmlexportPDF">
+                        <div class="padded responsive-utilities-test table-responsive" >
+                            <table id="testTable" class="table table-striped table-bordered table-hover datatable table-responsive" >
+                                <thead>
+                                    <tr>
+                                        <th>Nombre</th>
+                                        <th>Apellido</th>
+                                        <th>Email</th>
+                                        <th>Asunto</th>
+                                        <th>Opciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <c:forEach items="#{controladorContactenos.consultarEmail()}" var="objEmail">
+                                        <tr>
+                                            <td>#{objEmail.nombre}</td>
+                                            <td>#{objEmail.apellido}</td>
+                                            <td>#{objEmail.correo}</td>
+                                            <td class="text-right">#{objEmail.asunto}</td>
+                                            <td class="text-right">
+                                                <button href="#" class="btn  btn-xs" data-toggle="modal" title="Ver mensaje" data-target="#mensaje#{objEmail.idContactenos}"><span class="icon-envelope"></span></button>
+                                            </td>
+                                        </tr>      
+                                    </c:forEach>
+                                </tbody>
+                            </table>
+
+
+                            <!-- MODAL VER TODO-->
+                            <c:forEach var="contacto" items="#{controladorContactenos.consultarEmail()}">
+                                <div class="modal fade" id="mensaje#{contacto.idContactenos}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                    <div class="modal-content" role="document" id="verTodo">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                <h4 class="modal-title" id="myModalLabel">Contactenos:&nbsp;#{contacto.idContactenos}</h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="table-hover">
+                                                    <table class="table table-bordered table-responsive" align="center">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Nombre</th>
+                                                                <th>Apellido</th>
+                                                                <th>Email</th>
+                                                                <th>Asunto</th>
+                                                                <th>Mensaje</th>
+                                                            </tr>
+
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td>#{contacto.nombre}</td>
+                                                                <td>#{contacto.apellido}</td>
+                                                                <td>#{contacto.correo}</td>
+                                                                <td class="text-right">#{contacto.asunto}</td>
+                                                                <td>#{contacto.contactenos}</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- FIN MODAL VER TODO-->
+                            </c:forEach>
+                        </div>
+
+                        <input type="button" class="botonimagenexcel" id="excel"  onclick="tableToExcel('testTable')"></input>
+                        <input type="button" class="botonimagenpdf" id="pdf"  onclick="htmltopdf()"></input>
+                    </div>
+                    <p style="float: right; font-family: 'neoteric'; font-size: 20px; letter-spacing: 1px; font-weight: bold; margin-top: 10px;">Exportar tabla a:</p>
+                </div>
+            </ui:define>
+            <ui:define name="scripts">
+<script src='resources/js/tables/dataTables.bootstrap.min'></script>
+                <script src='resources/js/tables/prueba.js'></script>
+                <script src='../resources/js/bootstrap.min.js'></script>
+                <script src='resources/js/tables/table.js'></script>
+                <script src='../resources/js/tooltip.js'></script>
+                <script type="text/javascript">
+                            $('button').tooltip();
+                </script>
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>

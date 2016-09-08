@@ -1,0 +1,189 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link rel='stylesheet' href='assets/css/font-awesome/font-awesome.css'></link>
+        <link rel='stylesheet' href='assets/css/app.css'></link>
+        <link rel='stylesheet' href='assets/css/bootstrap.css'></link>
+        <link rel="stylesheet" href="assets/css/formValidation.min.css"></link> 
+        <link rel="shortcut icon" href="../img/1319013802.ico" ></link>
+
+        <ui:insert name="links"></ui:insert>
+        <ui:insert name="tituloPag"><title>Escribe aqui</title></ui:insert>
+    </h:head>
+
+    <h:body>
+        <div class="all-wrapper">
+            <div class="row">
+                <div id="left">
+
+                    <div class="col-md-3">
+                        <div class="text-center">
+                            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                                <span class="sr-only">Toggle navigation</span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+                        </div>
+                        <!--PARTE DEL LOGO-->
+                        <div class="side-bar-wrapper collapse navbar-collapse navbar-ex1-collapse">
+                            <a href="#" class="logo hidden-sm hidden-xs">
+                                <img src="assets/images/imgadmin.png" width="240" height="235" alt="Foto del usuario" class="img-circle" style="margin-top: 10px"></img>
+                                <span>#{controladorUsuario.objUsuarioLogin.nombre}</span>
+                                <br></br>
+                               <select id="rol" name="rol" class="form-control" required="required" onchange="location=this.value">
+                                    <c:forEach var="objRol" items="#{controladorUsuario.mostrarRoles()}">
+                                        <option value="#{objRol.rol.idRol eq 1 ? '../Usuario/index.xhtml':'' or objRol.rol.idRol eq 2 ? '../Cliente/index.xhtml':'' or objRol.rol.idRol eq 3 ? '../Proveedor/index.xhtml':''}"><span id="uno"> #{objRol.rol.nombre}</span></option>
+                                    </c:forEach>
+                                    </select>
+                            </a>
+
+                            <!--Caja buscar-->
+                            <div class="search-box">
+                                <input type="text" placeholder="BUSCAR" class="form-control"></input>
+                            </div>
+                            <ui:insert name="menuInicio">
+                                <!--Menu izquierdo superior-->
+                                <ul class="side-menu side-menu-green">
+                                    <li>
+                                        <a class='current' href="index.xhtml">
+                                            <span class="badge pull-right"></span>
+                                            <i class="icon-home"></i><span style="font-size: 14px;">Inicio</span> 
+                                        </a>
+                                    </li>
+                                </ul>
+                            </ui:insert>
+                            <!--Menu izquierdo inferior-->
+                            <div class="relative-w">
+
+                                <ul class="side-menu side-menu-green">
+                                    <ui:insert name="menuGestionarUsuario">
+                                        <li>
+                                            <a href="#" class="current is-dropdown-menu">
+
+                                                <i class="icon-arrow-down"></i><span style="font-size: 14px;">Gestión de usuarios</span>
+                                            </a>
+                                            <ul style="display: none;">
+                                                <li>
+                                                    <a href="gestionDeUsuarios.xhtml">
+                                                        <span class="badge pull-right">#{controladorUsuario.contarUsuarios()}</span>
+                                                        <i class="icon-user"></i><span style="font-size: 14px;">
+                                                            Usuarios</span>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="#">
+                                                        <span class="badge pull-right">#{controladorCliente.contarClientes()}</span>
+                                                        <i class="icon-usd"></i><span style="font-size: 14px;">
+                                                            Clientes</span>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="#">
+                                                        <span class="badge pull-right">#{controladorProveedor.contarProveedor()}</span>
+                                                        <i class="icon-apple"></i><span style="font-size: 14px;">
+                                                            Proveedores</span>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ui:insert>
+                                    <ui:insert name="menuGestionarOfertas">
+                                        <li>
+                                            <a href="gestionDeOfertas.xhtml">
+                                                <span class="badge pull-right">#{controladorOferta.contarOfertas()}</span>
+                                                <i class="icon-usd"></i><span style="font-size: 14px;">Gestión de ofertas</span> 
+                                            </a>
+                                        </li>
+                                    </ui:insert>
+                                    <ui:insert name="menuGestionarPedidos">
+                                        <li>
+                                            <a href="gestionDePedidos.xhtml">
+                                                <span class="badge pull-right" >#{controladorPedido.contarPedidos()}</span>
+                                                <i class="icon-shopping-cart"></i><span style="font-size: 14px;">Gestión de pedidos</span> 
+                                            </a>
+                                        </li>
+                                    </ui:insert>
+                                    <ui:insert name="menuGestionarEnvios">
+                                        <li>
+                                            <a href="gestionDeEnvios.xhtml">
+                                                <span class="badge pull-right" style="font-size: 11px;">8</span>
+                                                <i class="icon-truck"></i><span style="font-size: 13px;">Gestión de envios</span> 
+                                            </a>
+                                        </li>
+                                    </ui:insert>
+                                    <ui:insert name="menuEmail">
+                                        <li>
+                                            <a href="email.xhtml">
+                                                <span class="badge pull-right">24</span>
+                                                <i class="icon-envelope"></i><span style="font-size: 14px;">E-mail</span> 
+                                            </a>
+                                        </li>
+                                    </ui:insert>
+                                </ul>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+                <div id="content" class="left_content">
+                    <div class="col-md-9">
+                        <!--Botones superiores-->
+                        <div class="content-wrapper wood-wrapper">
+                            <div class="content-inner content-inner-grey">
+                                <div class="page-header page-header-green">
+                                    <div class="header-links hidden-xs">
+                                        <a href="#"><i class="icon-cog"></i> Configuración</a>
+                                        <a href="#"><i class="icon-signout"></i> Cerrar sesión</a>
+                                    </div>
+                                    <ui:insert name="nombrePagina"><h1><i class="icon-bar-chart"></i> Titulo</h1></ui:insert>
+                                </div>
+                                <!--Migas de pan-->
+                                <ol class="breadcrumb">
+                                    <ui:insert name="migasPan">
+                                        <li><a href="#">Home</a></li>
+                                        <li><a href="#">Bread</a></li>
+                                        <li><a href="#">Crumbs</a></li>
+                                        <li class="active">Example</li>
+                                    </ui:insert>
+                                    <li id="fecha" style="float:right; ">
+                                        <script type="text/javascript"> var meses = new Array("Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"); var diasSemana = new Array("Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"); var f = new Date(); document.write(diasSemana[f.getDay()] + ", " + f.getDate() + " de " + meses[f.getMonth()] + " de " + f.getFullYear());</script>
+                                    </li>
+                                </ol>
+                                <!--Contenido-->
+                                <div class="main-content">
+                                    <ui:insert name="contenido">
+                                        <h2>CONTENIDO</h2>
+                                    </ui:insert>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="../resources/js/bootstrap.min.js"></script>
+        <script src="../resources/js/jquery.min.js"></script>
+        <script src="../resources/js/jquery-ui.min.js"></script>
+        <script src="../resources/js/collapse.js"></script><!--SCRIPT QUE HACE FUNCIONAR EL DATA TOGGLE-->
+        <script src="../resources/js/formValidation.min.js"></script> 
+        <script src="../resources/js/es_ES.js"></script>
+        <script src='../resources/js/application.js'></script>
+        
+        <ui:insert name="scripts">
+            
+        </ui:insert>
+
+
+    </h:body>
+
+</html>

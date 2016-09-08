@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <head>
+        <title>Precarga</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </head>
+    <body>
+        <h1>${requestScope['libro']}</h1>
+        <h1>Cantidad de paginas: #{excelControlador.cantidadHojas(requestScope["libro"])}</h1>
+
+        <table border="1">
+            <tbody>
+                <c:forEach end="#{excelControlador.mihoja.columns-1}" begin="0" var="paso">
+                    <th>
+                        #{excelControlador.mihoja.getCell(paso, 0).getContents()}
+                    </th>
+                </c:forEach>
+
+                <th>
+                    Estado
+                </th>
+            </tbody>
+
+            <tbody>
+                <c:forEach end="#{excelControlador.mihoja.rows - 1}" begin="1" var="fila">
+                    <tr>
+                        <c:forEach end="#{excelControlador.mihoja.columns - 1}" begin="0" var="columna">
+                            <td>
+                                #{excelControlador.mihoja.getCell(columna,fila).getContents()}
+                            </td>    
+                        </c:forEach>
+                          #{excelControlador.setPlaca(excelControlador.mihoja.getCell(0,fila).getContents())}
+                        #{excelControlador.setIdUsuario(excelControlador.mihoja.getCell(1,fila).getContents())}
+                        #{excelControlador.setIdCategoria(excelControlador.mihoja.getCell(2,fila).getContents())}
+                        #{excelControlador.setModelo(excelControlador.mihoja.getCell(3,fila).getContents())}
+                        #{excelControlador.setMarca(excelControlador.mihoja.getCell(4,fila).getContents())}
+                        #{excelControlador.setColor(excelControlador.mihoja.getCell(5,fila).getContents())}
+                        #{excelControlador.setIdEstado(excelControlador.mihoja.getCell(6,fila).getContents())}
+                        #{excelControlador.setPrecio(excelControlador.mihoja.getCell(7,fila).getContents())}
+                        <td>
+                            #{excelControlador.ingresarAuto()}
+                        </td>
+                      
+                    </tr>
+                </c:forEach>
+            </tbody>
+
+        </table>
+    </body>
+</html>

@@ -1,0 +1,61 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <body>
+
+        <ui:composition template="./PlantillaEffectiveOrders.xhtml">
+
+            <ui:define name="nombre">
+                Portafolio | Effective Orders
+            </ui:define>
+
+            <ui:define name="portafolio">
+                <li><h:link id="botonPortafolio" outcome="portafolio.xhtml" class="active"><i class="fa fa-briefcase"></i> Portafolio</h:link></li>
+            </ui:define>
+
+            <ui:define name="content">
+                <div class="container">
+                    <div class="row">
+                        <div class="box">
+                            <div id="enunciado">
+                                <div class="col-lg-12">
+                                    <hr></hr>
+                                    <h2 class="intro-text text-center">
+                                        <strong>Nuestros productos</strong>
+                                    </h2>
+                                    <hr></hr>
+                                </div>
+                                <div class="col-lg-12 text-center">
+                                    <div class="col-lg-4 col-sm-6 text-center">
+                                        <img class="img-responsive img-center" src="RecursosPrincipal/img/portafolio/aguacate.png" alt=""/>
+                                        <h3>1. Aguacate </h3>
+                                        <p><img class="img-responsive img-center" src="RecursosPrincipal/img/portafolio/AguacatePrecio.png" alt=""/></p>
+                                    </div>
+
+                                    <div class="col-lg-4 col-sm-6 text-center">
+                                        <img class="img-responsive img-center" src="RecursosPrincipal/img/portafolio/pitaya.png" alt=""/>
+                                        <h3>2.  Pitaya </h3>
+                                        <p><img class="img-responsive img-center" src="RecursosPrincipal/img/portafolio/PitayaPrecio.png" alt=""/></p>
+                                    </div>
+
+                                    <div class="col-lg-4 col-sm-6 text-center">
+                                        <img class="img-responsive img-center" src="RecursosPrincipal/img/portafolio/guanabana.png" alt=""/>
+                                        <h3>3. Guanábana </h3>
+                                        <p><img class="img-responsive img-center" src="RecursosPrincipal/img/portafolio/GuanabanaPrecio.png" alt=""/></p>
+                                    </div>
+
+                                    <hr></hr>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

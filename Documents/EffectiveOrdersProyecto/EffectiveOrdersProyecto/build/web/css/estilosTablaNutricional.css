@@ -1,0 +1,10 @@
+@charset "utf-8";
+/* CSS Document */
+
+table{ text-align:center;
+}
+
+thead {
+	text-align:center;
+	background: #FFF746; }
+

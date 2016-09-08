@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="6d1ccf2e-4730-4e1e-87f2-3878146c3f49">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT
+     ofertas.`fechaInicio` AS ofertas_fechaInicio,
+     ofertas.`fechaFin` AS ofertas_fechaFin,
+     ofertas.`descuento` AS ofertas_descuento,
+     ofertas.`codigoProducto` AS ofertas_codigoProducto,
+     ofertas.`estado` AS ofertas_estado,
+     ofertas.`cedulaProveedor` AS ofertas_cedulaProveedor
+FROM
+     `ofertas` ofertas]]>
+	</queryString>
+	<field name="ofertas_fechaInicio" class="java.sql.Date"/>
+	<field name="ofertas_fechaFin" class="java.sql.Date"/>
+	<field name="ofertas_descuento" class="java.lang.Integer"/>
+	<field name="ofertas_codigoProducto" class="java.lang.Integer"/>
+	<field name="ofertas_estado" class="java.lang.String"/>
+	<field name="ofertas_cedulaProveedor" class="java.lang.Integer"/>
+	<field name="txt" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="101" splitType="Stretch">
+			<image>
+				<reportElement x="-7" y="9" width="151" height="92" uuid="15dffcef-480b-473e-990d-8ff33d546fda"/>
+				<imageExpression><![CDATA["C:\\Users\\Paola Fresneda\\Downloads\\logo-ultim-01.jpg"]]></imageExpression>
+			</image>
+			<rectangle>
+				<reportElement x="118" y="21" width="349" height="49" forecolor="#2AB015" backcolor="#2AB015" uuid="f1834ee5-903a-4227-9ca2-08ca6f71a031"/>
+			</rectangle>
+			<textField isBlankWhenNull="true">
+				<reportElement x="163" y="29" width="490" height="48" forecolor="#FFFFFF" uuid="f1949800-b7ba-4136-b2e1-e63e4e621dfc"/>
+				<textElement>
+					<font size="24"/>
+				</textElement>
+				<textFieldExpression><![CDATA[EFFECTIVE ORDERS]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="53" splitType="Stretch">
+			<textField>
+				<reportElement x="225" y="33" width="100" height="20" uuid="2b72f8e6-5c80-4af9-b6f4-1fee57192a48"/>
+				<textFieldExpression><![CDATA[$F{txt}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="12" y="26" width="200" height="27" uuid="9f550a3e-122f-4483-9433-fc4039321334"/>
+				<textElement>
+					<font size="18"/>
+				</textElement>
+				<textFieldExpression><![CDATA[Reporte generado por:]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="639" y="26" width="100" height="20" uuid="a6d02cc1-fe31-499c-8cc6-6647d05e6c2f"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="62" splitType="Stretch">
+			<staticText>
+				<reportElement x="24" y="33" width="100" height="20" uuid="63c8563d-fa0b-450c-898d-c342d6052333"/>
+				<text><![CDATA[Cedula Proveedor]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="157" y="33" width="100" height="20" uuid="aac07492-71ce-4d13-a404-96d30101c55b"/>
+				<text><![CDATA[Codigo Producto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="295" y="33" width="100" height="20" uuid="db9e79ea-85e7-4cb7-af80-59ca33c6313f"/>
+				<text><![CDATA[Fecha Inicio]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="440" y="33" width="100" height="20" uuid="fe0f9691-1dc3-4c11-aa07-f8615246b7d1"/>
+				<text><![CDATA[Fecha Fin]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="578" y="33" width="100" height="20" uuid="17a39ad1-41d6-4539-97c4-12a459eb62c8"/>
+				<text><![CDATA[Estado]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="211" splitType="Stretch">
+			<textField>
+				<reportElement x="24" y="33" width="100" height="20" uuid="1912de93-d5b2-4bfc-9f32-cb1bf53b439a"/>
+				<textFieldExpression><![CDATA[$F{ofertas_cedulaProveedor}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="157" y="33" width="100" height="20" uuid="3f0cd37f-fc09-4bff-8744-5098dd088a60"/>
+				<textFieldExpression><![CDATA[$F{ofertas_codigoProducto}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="295" y="33" width="100" height="20" uuid="086969e5-ce79-4498-ada4-73a71a49833b"/>
+				<textFieldExpression><![CDATA[$F{ofertas_fechaInicio}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="440" y="33" width="100" height="20" uuid="6cc61e5a-96fd-4bd3-805b-f46804dd42cd"/>
+				<textFieldExpression><![CDATA[$F{ofertas_fechaFin}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="578" y="33" width="100" height="20" uuid="0ba1df3a-7897-4a9a-aaa3-802701dd44ff"/>
+				<textFieldExpression><![CDATA[$F{ofertas_estado}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

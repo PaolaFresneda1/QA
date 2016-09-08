@@ -1,0 +1,63 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <body>
+
+        <ui:composition template="./plantillaUsuario.xhtml">
+
+            <ui:define name="tituloPag">
+                <title>Inicio</title>
+            </ui:define>
+            
+            <ui:define name="nombrePagina">
+               <h1><i class="fa fa-home"></i> Inicio</h1>
+            </ui:define>
+            
+            <ui:define name="migasPan">
+                <li class="active">Inicio</li>
+            </ui:define>
+
+            <ui:define name="menuInicio">
+                <li class="current">
+                    <a class="current" href="index.xhtml">
+                        <span class="badge pull-right">15</span>
+                        <i class="fa fa-home"></i> Inicio
+                    </a>
+                </li>
+            </ui:define>
+            <ui:define name="contenido">
+                <c:if test="#{controladorUsuario.genero==1}">
+                    <h3 style="color:#27ae60; font-weight: bold;text-transform: uppercase;font-size: 22px">Bienvenido al Sistema de información Effective Orders </h3>
+                    <p style=" font-size: 17px"><span style="text-transform: capitalize">#{controladorUsuario.objUsuarioLogin.nombre} </span>, en este momento se encuentra registrado como usuario y no podrá  acceder a ningún  otro modulo hasta diligenciar los datos correspondientes para gestionar su acceso al sistema
+                        como cliente o como proveedor.<br></br><br></br> A continuación podra comenzar a gestionar sus permisos en nuestro sistema.
+                    </p>
+                    <br></br>
+                    <h:link class="fa fa-briefcase" outcome="gestionarCliente"><i style="font-family:'teen'; font-weight: bold; font-size: 18px; margin-left: 100px;">*Registrarme como cliente</i></h:link>
+                    <br></br>
+                    <h:link class="fa fa-briefcase" outcome="gestionarProveedor"><i style="font-family:'teen'; font-weight: bold; font-size: 18px;margin-left: 100px;">*Registrarme como proveedor</i></h:link>
+                </c:if>
+
+                <c:if test="#{controladorUsuario.genero==2}">
+                    <h3 id="textoBienvenida">Bienvenida al Sistema de información Effective Orders </h3>
+                    <br></br>
+                    <div id="bienvenida"><p>#{controladorUsuario.objUsuarioLogin.nombre}, en este momento se encuentra registrada como <b>usuario</b> y no podrá  acceder a ningún  otro módulo hasta diligenciar los datos correspondientes para gestionar su acceso al sistema
+                            como cliente o como proveedor.<br></br><br></br> A continuación podrá comenzar a gestionar sus permisos en nuestro sistema.
+                        </p></div>
+                    <br></br>
+                    <a href="gestionarCliente.xhtml" style="font-family:'teen'; font-weight: bold; font-size: 20px; margin-left: 290px;">Registrarme como cliente <i class="fa fa-arrow-right" style="margin-left: 10px;"></i></a>
+                    <br></br><br></br>
+                    <a href="gestionarProveedor.xhtml" style="font-family:'teen'; font-weight: bold; font-size: 20px; margin-left: 290px;">Registrarme como proveedor <i class="fa fa-arrow-right" style="margin-left: 10px;"></i></a>
+                </c:if>
+
+
+
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

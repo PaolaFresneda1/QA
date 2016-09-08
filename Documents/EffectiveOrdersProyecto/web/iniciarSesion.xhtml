@@ -1,0 +1,78 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+
+    <body>
+
+        <ui:composition template="./PlantillaEffectiveOrders.xhtml">
+
+            <ui:define name="nombre">
+                Iniciar Sesión | Effective Orders
+            </ui:define>
+            <ui:define name="iniciarSesion">
+                <li><h:link id="botonIniciarSesion" outcome="iniciarSesion.xhtml" class="active"><i class="fa fa-sign-in"></i> Iniciar sesión</h:link></li>
+            </ui:define>
+
+            <ui:define name="content">
+                <section>
+                    <div class="inner-bg">
+                        <br></br>
+                        <br></br>
+                        <br></br>
+                        <br></br>
+                        <br></br>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-sm-6 col-sm-offset-3 form-box col-md-push-2 col-sm-push-2">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h3 class="panel-title">Iniciar sesión</h3>
+                                        </div>
+                                        <div class="panel-body">
+                                            <h:form id="formularioInicioSesion" >
+
+                                                <div class="form-group">
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span> 
+                                                        <input class="form-control" placeholder="Documento" id="documento" name="documento" type="text" autofocus="true"></input>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                                                        <input class="form-control" placeholder="Contraseña" id="contrasena" name="contrasena" type="password" value=""></input>
+
+                                                    </div>
+                                                </div>
+                                                <div  id="recordar" class="checkbox">
+                                                    <label>
+                                                        <input name="recordarme" type="checkbox" value="Recordarme"> Recordarme</input>
+                                                    </label>
+                                                </div>
+                                                <div id="contra">
+                                                    <a href="www.google.com"> ¿Has olvidado tu contraseña?</a><br></br>
+                                                    <h:link value="¡Registrate aquí!" outcome="registro"></h:link>
+
+                                                </div>
+
+                                                <div id="btnLogin">
+                                                    <h:commandButton id="btnLogin" class="btn btn-lg btn-success btn-block" value="Ingresar" action="#{controladorUsuario.login()}"></h:commandButton>
+                                                </div>
+                                            </h:form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </ui:define>
+            <script src="RecursosPrincipal/js/validacionIniciarSesion.js"></script>
+        </ui:composition>
+
+    </body>
+</html>

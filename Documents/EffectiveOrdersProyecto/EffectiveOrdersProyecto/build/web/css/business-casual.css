@@ -1,0 +1,432 @@
+/*!
+ * Start Bootstrap - Business Casual Bootstrap Theme (http://startbootstrap.com)
+ * Code licensed under the Apache License v2.0.
+ * For details, see http://www.apache.org/licenses/LICENSE-2.0.
+ */
+@font-face {
+    font-family: 'teen';
+    src: url('../fonts/teen-webfont.eot');
+    src: url('../fonts/teen-webfont.woff2') format('woff2'),
+        url('../fonts/fontawesome-webfont.woff') format('woff'),
+        url('../fonts/teen-webfont.ttf') format('truetype'),
+        url('../fonts/teen-webfont.svg') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body{
+    font-family: 'teen';
+    background-color:#E6E6E6;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
+    width:auto
+}
+
+
+
+#logo{
+    padding-top:100px;
+    padding-bottom:20px;
+    width: 100%;
+    background-size: contain;
+    background-image:url(../img/logoe.png);
+    background-position:center;
+    background-repeat:no-repeat;
+}
+header{
+    padding-top:20px;
+    width: 100%;
+    height:180px;
+    font-size:100%;
+    background-image:url(../img/banner.jpg);
+    font-family:'teen';
+    font-size:20px;
+    letter-spacing:1px;
+    font-weight:bold;
+}
+.active{
+    background-color: #000;
+}
+h5,
+h6{
+    text-transform: uppercase;
+    font-family: 'teen';
+    font-weight: 700;
+    letter-spacing: 1px;
+      text-align:center;
+    color:#000;
+    background-color:#FFF;
+    background: rgba(255, 255, 255, 0.8);
+    font-weight: bold;
+    font-size: 1.5em;
+}
+
+h2{
+    font-family:'teen';
+    letter-spacing: 1px;
+    font-size:26px;
+    text-align:center;
+    font-weight: bold;
+}
+
+h3{
+    font-family:'teen';
+    letter-spacing: 1px;
+    font-size:32px;
+    text-align:center;
+
+}
+
+h4{
+    font-family:'teen';
+    letter-spacing: 1px;
+    font-size:24px;
+    text-align:center;
+    color:#000;
+    background-color:#FFF;
+    background: rgba(255, 255, 255, 0.8);
+    font-weight: bold;
+
+}
+
+p{
+    font-size: 110%;
+    line-height: 1.4;
+    color: #000;
+}
+
+
+hr{
+    max-width: 400px;
+    border-color: #999999;
+}
+
+.brand,
+.address-bar{
+    display: none;
+}
+
+.navbar-brand{
+    text-transform: uppercase;
+    font-weight: 900;
+    letter-spacing: 2px;
+}
+
+.navbar-nav{
+    text-transform: uppercase;
+    font-weight: 400;
+    letter-spacing: 2px;
+    font-family:'teen';
+}
+
+.img-full{
+    min-width: 100%;
+}
+
+.brand-before,
+.brand-name{
+    text-transform: capitalize;
+}
+
+.brand-before{
+    margin: 15px 0;
+}
+
+.brand-name{
+    margin: 0;
+    font-size: 4em;
+}
+
+.tagline-divider{
+    margin: 15px auto 3px;
+    max-width: 250px;
+    border-color: #999999;
+}
+
+.box{
+    margin-bottom: 20px;
+    padding: 30px 15px;
+    background: #fff;
+    background: rgba(255,255,255,0.9);
+}
+
+.intro-text{
+    text-transform: uppercase;
+    font-size: 1.25em;
+    font-weight: 400;
+    letter-spacing: 1px;
+}
+
+.img-border{
+    float: none;
+    margin: 0 auto 0;
+    border: #999999 solid 1px;
+}
+
+.img-left{
+    float: none;
+    margin: 0 auto 0;
+}
+
+.img-center{
+    margin: 0 auto;
+    padding-left:10px;
+}
+
+#informacion{   
+  text-align:center;
+  padding-left:30px;
+  padding-bottom:15px;
+  font-family:'teen';
+  font-size:16px;
+}
+
+#formulario{
+    font-family:'teen';
+    font-size:20px;
+}
+
+strong {
+    font-size:20px;
+}
+
+.btn{
+    display:block;
+    font-size:16px;
+    float:right;
+    border-color:#060;
+    background-color:#0C0;
+    color:#000;
+    font-family:'teen';
+}   
+
+.btn:hover{
+    background-color:#0C3;
+    color:#F1EFEF;
+}   
+
+.modal-body{
+    font-family:'teen';
+}
+
+#footer{
+    padding-top: 30px;
+    padding-bottom: 30px;
+    color: #fff;
+    background-image:url(../img/cats.jpg);
+    font-size:14px;
+    font-family:'teen';
+    font-size:16px;
+}
+
+#footer a{
+    color: #fff;
+}
+
+#footer a:hover{
+    color: #000;
+}
+
+#footer ul{
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+#footer ul > li{
+    display: inline-block;
+    margin-left: 15px;
+}
+
+.footer{
+    background: none repeat scroll 0 0 #2E2E2E;
+    border-top: 5px solid #C52D2F;
+    height: 84px;
+    margin-top: 110px;
+}
+
+.footer_left{
+    padding: 10px;
+}
+
+label.error{
+    color: #900;
+    font-size: 18px;
+    text-align: left;
+    padding: 3px;
+    margin: 5px;
+    font-family: 'teen';
+
+}
+
+input.error{
+    background-color: #FEE;
+    border-color: #933;
+}
+
+input.valid{
+    background-color: #EFE;
+    border-color: #2CD73A;
+}
+
+input:focus{ 
+    color: #0C3;
+}
+
+@media screen and (min-width:768px){
+    .brand {
+        display: inherit;
+        margin: 0;
+        padding: 30px 0 10px;
+        text-align: center;
+        text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        font-family: "Josefin Slab","Helvetica Neue",Helvetica,Arial,sans-serif;
+        font-size: 5em;
+        font-weight: 700;
+        line-height: normal;
+        color: #fff;/*color titulo del header*/
+    }
+
+    .top-divider{
+        margin-top: 0;
+    }
+
+    .img-left{
+        float: left;
+        margin-right: 25px;
+    }
+
+    .address-bar{
+        display: inherit;
+        margin: 0;
+        padding: 0 0 40px;
+        text-align: center;
+        text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        text-transform: uppercase;
+        font-size: 1.25em;
+        font-weight: 400;
+        letter-spacing: 3px;
+        color: #fff;/*cambia color de subtitulo header*/
+    }
+
+    .navbar{
+        border-radius: 0;
+    }
+
+    .navbar-header{
+        display: none;
+
+    }
+
+    .navbar{
+        min-height: 0;
+    }
+
+    .navbar-default{
+        border: none;
+        background-color: #fff;
+        background: #000;
+    }
+
+   .nav>li{
+        font-family: 'teen';
+    }
+    .nav>li>i{
+        font-family: 'teen';
+    }
+    .nav>li>a{
+        padding: 35px;
+        
+        
+    }
+
+    .navbar-nav>li>a:hover{
+        background-color: #000 !important;
+    }
+
+    .navbar-nav>li>a{
+        line-height: normal;
+    }
+
+    .navbar-nav{
+        display: table;
+        float: none;
+        margin: 0 auto;
+        table-layout: fixed;
+        font-size: 108%; /*Cambiar tamaño letra menu*/
+    }
+}
+
+.prueba{
+    margin-top: 8px;
+}
+
+.form-control-feedback { 
+    margin-top: 5px;
+}
+
+@media screen and (min-width:1200px){
+    .box:after{
+        content: '';
+        display: table;
+        clear: both;
+    }
+}
+
+/*Estilos propios*/
+#titulo{
+    font-family:'teen';
+    letter-spacing: 1px;
+    font-size:22px;
+    text-align:center; 
+}
+
+#texto{
+    padding-top:10px;
+    padding-right:40px;
+    font-size:18px;
+    line-height: 1.6;
+    color: #000;
+    font-family:'teen';
+    text-align:justify;
+}
+
+#texto1{
+    padding-top:40px;
+    padding-left:90px;
+    margin-right: 20px;
+    font-size:18px;
+    line-height: 1.6;
+    color: #000;
+    font-family:'teen';
+    text-align:justify;
+}
+
+#enunciado{
+    font-family:'teen';
+    letter-spacing: 1px;
+    font-size:22px;
+    text-align:center; 
+}
+
+#nit{
+    margin-top: 7px;
+}
+
+#slider{
+    margin-left:105px;
+    margin-bottom: 40px;
+}
+
+#mision{
+    padding-left: 92px;
+}
+
+#derechos {
+    padding-left:40px;
+}
+#menu {
+    padding-right:35px;
+}

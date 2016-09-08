@@ -1,0 +1,179 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <body>
+
+        <ui:composition template="./plantillaProveedor.xhtml">
+
+            <ui:define name="links">
+
+            </ui:define>
+
+            <ui:define name="tituloPag">
+                <title>Inicio | Proveedor</title>
+            </ui:define>
+
+            <ui:define name="nombrePagina">
+                <h1><i class="fa fa-home"></i> Inicio</h1>
+            </ui:define>
+
+            <ui:define name="migasPan">
+                <li class="active">Inicio</li>
+            </ui:define>
+
+            <ui:define name="menuInicio">
+                <li class="current">
+                    <a class="current" href="index.xhtml">
+                        <span class="badge pull-right"></span>
+                        <i class="fa fa-home"></i><span style="font-size: 14px">Inicio</span>
+                    </a>
+                </li>
+            </ui:define>
+
+            <ui:define name="contenido">
+                <div class="row">
+                    <div class="col-lg-2 col-sm-6" style="width: 195px; margin-left: 75px;">
+                        <div class="circle-tile">
+                            <a href="#">
+                                <div id="verde" class="circle-tile-heading greenDark">
+                                    <i class="fa fa-shopping-cart fa-fw fa-3x"></i>
+                                </div>
+                            </a>
+                            <div class="circle-tile-content green2">
+                                <div class="circle-tile-description text-faded">
+                                    Pedidos
+                                </div>
+                                <div class="circle-tile-number text-faded">
+                                    #{controladorUsuario.contarPedido()}
+                                    <span id="sparklineA"></span>
+                                </div>
+                                <a id="verde" href="#" class="circle-tile-footer greenDark">Ver más <i class="fa fa-chevron-circle-right" style="font-size:14px;"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-lg-2 col-sm-6" style="width: 195px;">
+                        <div class="circle-tile">
+                            <a href="#">
+                                <div id="naranja" class="circle-tile-heading orangeDark">
+                                    <i class="fa fa-usd fa-fw fa-3x"></i>
+                                </div>
+                            </a>
+                            <div class="circle-tile-content orange">
+                                <div class="circle-tile-description text-faded">
+                                    Ofertas realizadas
+                                </div>
+                                <div class="circle-tile-number text-faded">
+                                    #{controladorUsuario.contarOfertas()}
+                                </div>
+                                <a href="#" id="naranja" class="circle-tile-footer orangeDark">Ver más <i class="fa fa-chevron-circle-right" style="font-size:14px;"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-sm-6" style="width: 195px;">
+                        <div class="circle-tile">
+                            <a href="#">
+                                <div id="azul" class="circle-tile-heading blueDark">
+                                    <i class="fa fa-user fa-fw fa-3x"></i>
+                                </div>
+                            </a>
+                            <div class="circle-tile-content blue">
+                                <div class="circle-tile-description text-faded">
+                                    Conductores
+                                </div>
+                                <div class="circle-tile-number text-faded">
+                                    #{controladorUsuario.contarConductores()}
+                                    <span id="sparklineB"></span>
+                                </div>
+                                <a id="azul" href="#" class="circle-tile-footer blueDark">Ver más <i class="fa fa-chevron-circle-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-sm-6" style="width: 195px;">
+                        <div class="circle-tile">
+                            <a href="#">
+                                <div id="rojo" class="circle-tile-heading redDrack">
+                                    <i class="fa fa-truck fa-fw fa-3x"></i>
+                                </div>
+                            </a>
+                            <div class="circle-tile-content red">
+                                <div class="circle-tile-description text-faded">
+                                    Envios
+                                </div>
+                                <div class="circle-tile-number text-faded">
+                                    #{controladorUsuario.contarEnvios()}
+                                    <span id="sparklineC"></span>
+                                </div>
+                                <a id="rojo" href="#" class="circle-tile-footer redDrack">Ver más <i class="fa fa-chevron-circle-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <h:form>
+                    <div id="container2" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+                </h:form>
+
+
+
+
+            </ui:define>
+
+            <ui:define name="scripts">          
+
+                <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+                <script src="https://code.highcharts.com/highcharts.js"></script>
+                <script src="https://code.highcharts.com/modules/exporting.js"></script>
+
+                <script>
+                    $(function () {
+                        $('#container2').highcharts({
+                            title: {
+                                text: 'Monthly Average Temperature',
+                                x: -20 //center
+                            },
+                            subtitle: {
+                                text: 'Source: WorldClimate.com',
+                                x: -20
+                            },
+                            xAxis: {
+                                categories: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
+                                    'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre']
+                            },
+                            yAxis: {
+                                title: {
+                                    text: 'Temperature (°C)'
+                                },
+                                plotLines: [{
+                                        value: 0,
+                                        width: 1,
+                                        color: '#808080'
+                                    }]
+                            },
+                            tooltip: {
+                                valueSuffix: '°C'
+                            },
+                            legend: {
+                                layout: 'vertical',
+                                align: 'right',
+                                verticalAlign: 'middle',
+                                borderWidth: 0
+                            },
+                            series: [{
+                                    name: 'Entregados',
+                                    data: [9.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6]
+                                }]
+                        });
+                    });
+                </script> 
+
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

@@ -1,0 +1,132 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <h:head>
+
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+        <title><ui:insert name="nombre"></ui:insert></title>
+        <meta charset="utf-8"></meta>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"></meta>
+        <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+        <meta name="description" content=""></meta>
+        <meta name="author" content=""></meta>
+        <!-- InstanceBeginEditable name="doctitle" -->
+
+        <!-- InstanceEndEditable -->
+        <!-- Bootstrap Core CSS -->
+        <link href="RecursosPrincipal/css/bootstrap.css" rel="stylesheet" ></link>
+        <link href="RecursosPrincipal/css/font-awesome.min.css" rel="stylesheet"></link>
+
+        <!-- Custom CSS -->
+
+        <link href="RecursosPrincipal/css/business-casual.css" rel="stylesheet"></link>
+
+        <link rel="stylesheet" type="text/css" href="RecursosPrincipal/css/formValidation.css"></link>  <!-- Estilos de validacion -->
+        <link rel="stylesheet" type="text/css" href="RecursosPrincipal/css/sweetalert2.css"></link>
+        <!-- Fonts -->
+      
+        <link rel="shortcut icon" href="RecursosPrincipal/img/1319013802.ico" ></link>
+        <!-- jQuery --> 
+        <script src="RecursosPrincipal/js/jquery-1.12.3.min.js"></script>
+        <script src="RecursosPrincipal/js/jquery-ui.js"></script>
+        <script src="RecursosPrincipal/js/bootstrap.min.js"></script>
+        <script src="RecursosPrincipal/js/formValidation.min.js"></script>
+        <script src="RecursosPrincipal/js/bootstrap.js"></script>
+        <script src="RecursosPrincipal/js/es_ES.js"></script>
+         
+          <ui:insert name="links"></ui:insert>
+
+
+
+    </h:head>
+    <h:body>
+        <div id="top">
+            <ui:insert name="top">
+                <!-- Navigation -->
+                <nav class="navbar navbar-inverse" role="banner" >
+                    <div class="">
+                        <div class="navbar-header">
+                            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                                <span class="sr-only">Toggle navigation</span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+                        </div>
+
+                        <div class="collapse navbar-collapse ">
+                            <ul class="nav navbar-nav">
+                                <ui:insert name="index">
+                                     <li ><a id="botonInicio" href="index.xhtml"><i class="fa fa-home"></i> Inicio</a></li>
+                                </ui:insert>
+                                <ui:insert name="quienesSomos">
+                                     <li><a id="botonQuienesSomos" href="faces/quienesSomos.xhtml"><i class="fa fa-truck"></i> ¿Quiénes somos?</a></li>
+                                </ui:insert>
+                                <ui:insert name="portafolio">
+                                     <li><a id="botonPortafolio" href="faces/portafolio.xhtml"><i class="fa fa-briefcase"></i> Portafolio</a></li>
+                                </ui:insert>
+                                <ui:insert name="contactenos">
+                                     <li><a id="botonContactenos" href="faces/contactenos.xhtml"><i class="fa fa-phone"></i> Contáctenos</a></li>
+                                </ui:insert>
+                                <ui:insert name="registro">
+                                    <li><a id="botonRegistro" href="faces/registro.xhtml"><i class="fa fa-user"></i> Registro</a></li>
+                                </ui:insert>
+                                <ui:insert name="iniciarSesion">
+                                     <li><a id="botonIniciarSesion" href="faces/iniciarSesion.xhtml"><i class="fa fa-sign-in"></i> Iniciar sesión</a></li>
+                                </ui:insert>
+                               
+                               
+                                <!--<li class="dropdown">
+                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">Iniciar sesión <i class="fa fa-angle-down"></i></a>
+                                     <ul class="dropdown-menu">
+                                         <li><a href="blog-item.html">Registrarse</a></li>
+
+                                     </ul>
+                                 </li>     -->                  
+                            </ul>
+                        </div>
+                    </div><!--/.container-->
+                </nav><!--/nav-->
+
+                <header>
+                    <div id="logo"></div>
+                    <div id="info" class="address-bar">Sistema de información de recepción y entrega de pedidos</div>
+                </header>
+            </ui:insert>
+        </div>
+
+        <div id="content" class="center_content">
+            <ui:insert name="content"></ui:insert>
+        </div>
+
+        <div id="bottom">
+            <ui:insert name="bottom"> <footer id="footer" >
+                    <div class="row">
+                        <div id="derechos" class="col-sm-5">
+                            <b>Copyright &copy; 2015 Effective Orders. Todos los derechos reservados.</b>
+                        </div>
+                        <div id="menu" class="col-md-7">
+                            <ul class="hidden-xs">
+                                <li><h:link class="fa fa-home" outcome="index"><i style="font-family:'teen';font-style: normal; "> Inicio</i></h:link></li>
+                                <li><h:link class="fa fa-truck" outcome="quienesSomos"><i style="font-family:'teen';font-style: normal;"> ¿Quiénes somos?</i></h:link></li>
+                                <li><h:link class="fa fa-briefcase" outcome="portafolio"><i style="font-family:'teen'; font-style: normal;"> Portafolio</i></h:link></li>
+                                <li><h:link class="fa fa-phone" outcome="contactenos"><i style="font-family:'teen';font-style: normal;"> Contáctenos</i></h:link></li>
+                                <li><h:link class="fa fa-user" outcome="registro"><i style="font-family:'teen';font-style: normal;"> Registro</i></h:link></li>
+                                <li><h:link class="fa fa-sign-in" outcome="iniciarSesion"><i style="font-family:'teen';font-style: normal;"> Iniciar Sesión</i></h:link></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </footer>
+
+            </ui:insert>
+        </div>
+        <ui:insert id="script"></ui:insert>
+
+    </h:body>
+
+</html>

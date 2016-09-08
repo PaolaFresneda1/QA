@@ -1,0 +1,107 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <body>
+
+        <ui:composition template="./plantillaInterfazAdministrador.xhtml">
+
+            <ui:define name="tituloPag">
+                <title>Inicio Gerente| EffectiveOrders</title>
+            </ui:define>
+
+            <ui:define name="menuInicio">
+                <ul class="side-menu side-menu-green">
+                    <li class="current">
+                        <a class='current' href="index.xhtml">
+                            <span class="badge pull-right"></span>
+                            <i class="icon-home"></i><span style="font-size: 14px;">Inicio</span> 
+                        </a>
+                    </li>
+                </ul>
+            </ui:define>
+            <ui:define name="nombrePagina">
+                <h1 style="font-size: 23px;"><i class="icon-bar-chart"></i> Inicio</h1>
+
+            </ui:define>
+
+            <ui:define name="migasPan">
+                <li class="active">Inicio</li>
+            </ui:define>
+
+            <ui:define name="contenido">
+                <div class="row">
+                    <div class="col-md-3 col-sm-6 col-xs-6" style="margin-left: 60px">           
+                        <div class="panel panel-back noti-box">
+                            <span class="icon-box bg-color-red set-icon">
+                                <i class="icon-shopping-cart"></i>
+                            </span>
+                            <div class="text-box" >
+                                <p class="main-text">#{controladorPedido.contarPedidos()}</p>
+                                <p class="text-muted">Pedidos que han solicitado</p>
+                            </div>
+                            <a href="gestionDePedidos.xhtml">Ver&nbsp; <i class="icon-arrow-right"></i></a>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3 col-sm-6 col-xs-6">           
+                        <div class="panel panel-back noti-box">
+                            <span class="icon-box bg-color-red set-icon">
+                                <i class="icon-apple"></i>
+                            </span>
+                            <div class="text-box" >
+                                <p class="main-text">#{controladorProducto.contarProductos()}</p>
+                                <p class="text-muted">Productos registrados</p>
+                            </div>
+                            <a href="">Ver&nbsp; <i class="icon-arrow-right"></i></a>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3 col-sm-6 col-xs-6">           
+                        <div class="panel panel-back noti-box">
+                            <span class="icon-box bg-color-red set-icon">
+                                <i class="icon-user"></i>
+                            </span>
+                            <div class="text-box" >
+                                <p class="main-text">#{controladorUsuario.contarUsuarios()}</p>
+                                <p class="text-muted">Usuarios registrados</p>
+                            </div>
+                            <a href="ofertas.xhtml" style="color: #009B50">Ver&nbsp; <i class="icon-arrow-right"></i></a>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3 col-sm-6 col-xs-6">           
+                        <div class="panel panel-back noti-box">
+                            <span class="icon-box bg-color-red set-icon">
+                                <i class="icon-user"></i>
+                            </span>
+                            <div class="text-box" >
+                                <p class="main-text">#{controladorCliente.contarClientes()}</p>
+                                <p class="text-muted">Clientes registrados</p>
+                            </div>
+                            <a href="ofertas.xhtml" style="color: #009B50">Ver&nbsp; <i class="icon-arrow-right"></i></a>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6 col-xs-6">           
+                        <div class="panel panel-back noti-box">
+                            <span class="icon-box bg-color-red set-icon">
+                                <i class="icon-user"></i>
+                            </span>
+                            <div class="text-box" >
+                                <p class="main-text">#{controladorProveedor.contarProveedor()}</p>
+                                <p class="text-muted">Proveedores registrados</p>
+                            </div>
+                            <a href="ofertas.xhtml" style="color: #009B50">Ver&nbsp; <i class="icon-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+
+
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

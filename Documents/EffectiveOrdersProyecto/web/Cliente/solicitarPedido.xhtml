@@ -1,0 +1,213 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <body>
+
+        <ui:composition template="./plantillaCliente.xhtml">
+
+            <ui:define name="links">
+                <link rel="stylesheet" href="../RecursosModulos/css/jquery-ui.css"></link>
+                <script src="../RecursosModulos/js/jquery-ui.js"></script>
+                <script>
+                    function valores() {
+                        temp = document.getElementById('nombreProducto').value;
+                        document.getElementById("formularioOculto:oculto").value = temp;
+                        document.getElementById('formularioOculto:miBoton').click();
+                    }
+
+                    function Calcular(temp) {
+                        pcantidad = temp.value;
+                        pvalor = document.getElementById("formularioOculto:precioO").value;
+                        document.getElementById('precioPedido').value = (pcantidad * pvalor);
+                    }
+
+                    function myFunction() {
+                        document.getElementById("formularioSolicitudPedido").reset();
+                        $('#nombreProducto').val(1);
+                        document.getElementById("unidadProducto").value = '';
+                    }
+
+                    function activarBoton() {
+                        document.getElementById('formularioSolicitudPedido:reset').click();
+                    }
+                </script>
+
+
+                <script>
+                    $(function () {
+                        $.datepicker.regional['es'] =
+                                {
+                                    closeText: 'Cerrar',
+                                    prevText: 'Previo',
+                                    nextText: 'Próximo',
+                                    monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+                                    monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+                                    monthStatus: 'Ver otro mes', yearStatus: 'Ver otro año',
+                                    dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+                                    dayNamesShort: ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sáb'],
+                                    dayNamesMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa'],
+                                    dateFormat: 'dd/mm/yy', firstDay: 0,
+                                    initStatus: 'Selecciona la fecha', isRTL: false};
+                        $.datepicker.setDefaults($.datepicker.regional['es']);
+                        $("#fechaEntrega").datepicker({minDate: 3, dateFormat: 'yy-mm-dd', beforeShowDay: $.datepicker.noWeekends});
+                    });
+                </script>
+
+                <script>
+                    $(document).ready(function () {
+                        $("span.input-group-addon").on("click", function () {
+                            $("#fechaEntrega").datepicker("show");
+                        });
+                    });
+                </script>
+
+            </ui:define>
+
+            <ui:define name="tituloPag">
+                <title>Solicitud pedidos | Effective orders</title>
+            </ui:define>
+
+            <ui:define name="menuSolicitarPedido">
+                <li class="current">
+                    <a class="current" href="solicitarPedido.xhtml">
+                        <i class="fa fa-shopping-cart"></i> Solicitar pedidos
+                    </a>
+                </li>
+            </ui:define>
+
+            <ui:define name="nombrePagina">
+                <h1><i class="fa fa-shopping-cart"></i> Solicitar pedidos</h1>
+            </ui:define>
+
+            <ui:define name="migasPan">
+                <li><a href="index.xhtml">Inicio</a></li>
+                <li class="active">Solicitar pedidos</li>
+            </ui:define>
+
+            <ui:define name="contenido">
+
+                <c:if test="#{controladorPedido.estados==1}">
+                    <div  class="alert-box success" style="height:50px; margin-left: 60px"><span>Registrado : &nbsp;</span><strong>Su solicitud de pedido fue generada exitosamente .</strong></div>
+                </c:if>
+
+                <c:if test="#{controladorPedido.estados==2}">
+                    <div  class="alert-box warning" style="height:50px; margin-left: 60px"><span>No registrado : &nbsp;</span><strong>Su solicitud de pedido no fue generada.</strong></div>
+                </c:if>
+
+
+                <h:form id="formularioSolicitudPedido" class="form-horizontal">
+
+                    <legend>Solicitar Pedido <div id="ayuda" class="center" style="margin-right: 50px"><div class="tip" data-tip="Aquí puede solicitar pedidos, recuerde que todos los campos son obligatorios."><i class="fa fa-question-circle"></i></div></div></legend>
+
+                    <!-- Seleccionar producto -->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="nombreProducto">Producto</label>
+                        <div class="col-md-4">
+                            <select id="nombreProducto" name="nombreProducto" class="form-control" required="true" onchange="valores()">
+                                <option selected="true" disabled="true" value="1">--Seleccione un producto--</option>
+                                <c:forEach var="objProducto" items="#{controladorProducto.listarProductos()}">
+                                    <option value="#{objProducto.codigoProducto}" selected="#{controladorPedido.codigoProducto==objProducto.codigoProducto ? true:''}" >#{objProducto.nombreProducto}</option>
+                                </c:forEach>
+                            </select>
+
+                            <label id='precioU' class="col-md-12 control-label"  for="precioUnitario" style="float: right; font-size: 15px;">Precio unitario: &nbsp; <span>#{controladorPedido.precio}</span> </label>  
+                        </div>
+                    </div>
+
+                    <!-- Seleccionar cantidad-->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="cantidadProducto">Cantidad</label>
+                        <div class="col-md-4">
+                            <input type="number" id="cantidadProducto" name="cantidadProducto"  min="0" max="1000" placeholder="Kilogramos" class="form-control input-md" onchange="Calcular(this)" value="0" required="true"></input>
+                        </div>
+                    </div>
+
+                    <!-- Clasificacion producto -->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="clasificacionProducto">Clasificación</label>
+                        <div class="col-md-4" required="true"> 
+                            <select id="clasificacionProducto" name="clasificacionProducto" class="form-control" required="true" title="Select one of these options">
+                                <option selected="true" disabled="true">--Seleccione una clasificación--</option>
+                                <option value="Baja">Baja</option>
+                                <option value="Alta">Alta</option>
+                            </select>
+                        </div>
+                        <div id="ayuda" class="center col-md-1" style="font-size:1.5em; margin-right: 200px; margin-top:5px"><div class="tip" data-tip="Baja: Solo pulpa. Alta: Fruta "><i class=" fa fa-question-sign"></i></div></div>
+                    </div>
+
+                    <!-- Precio -->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="precioPedido">Precio Total</label>
+                        <div class="col-md-4"> 
+                            <label class="sr-only" for="precioPedido"> Precio (in COP)</label>
+                            <div class="input-group">
+                                <div class="input-group-addon fa fa-usd"></div>
+                                <input type="text" id="precioPedido" name="precioPedido" class="form-control"  placeholder="Precio Total" readonly="true" value="0"></input>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Direccion -->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="direccion">Dirección de entrega</label>  
+                        <div class="col-md-4">
+                            <input type="text" id="direccion" name="direccion" class="form-control input-md"></input>
+                        </div>
+                    </div>
+
+
+                    <!-- Fecha entrega -->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="fechaEntrega">Fecha entrega</label>
+                        <div class="col-md-4"> 
+                            <div class="input-group">
+                                <span class="input-group-addon fa fa-calendar"></span>
+                                <input type="text" id="fechaEntrega" name="fechaEntrega" class="form-control"></input>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!-- Comentarios-->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="comentariosPedido">Comentarios</label>
+                        <div class="col-md-4">                     
+                            <textarea class="form-control" id="comentariosPedido" name="comentariosPedido" placeholder="Escriba sus comentarios aquí" ></textarea>
+                        </div>
+                    </div>
+                    <!-- Cedula -->
+                    <div class="form-group hidden">
+                        <label class="col-md-4 control-label" for="cedulaCliente">Cedula</label>  
+                        <div class="col-md-4">
+                            <input type="text" id="cedulaCliente" name="cedulaCliente" class="form-control input-md" readonly="true" value="#{controladorUsuario.objUsuarioLogin.idUsuario}"></input>
+                        </div>
+                    </div>
+
+                    <!-- Boton -->
+                    <div id="boton">
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="boton"></label>
+                            <h:commandButton class="btn btn-submit" type="submit" action="#{controladorPedido.generarPedido()}"  value="Solicitar"></h:commandButton>
+                        </div>
+
+                    </div>
+                </h:form>
+                <h:form id="formularioOculto">
+                    <h:inputHidden id="oculto" value="#{controladorPedido.codigoProducto}"></h:inputHidden>
+                    <h:inputHidden id="precioO" value="#{controladorPedido.precio}"></h:inputHidden>
+                    <h:commandButton class="hidden" id="miBoton"  action="#{controladorPedido.consultarProducto()}" value="botonO"></h:commandButton>
+                    <h:commandButton  id="botonEstados"  action="#{controladorPedido.retornarValor()}" value="probar"></h:commandButton>
+                </h:form>
+
+            </ui:define>
+
+
+        </ui:composition>
+
+    </body>
+</html>

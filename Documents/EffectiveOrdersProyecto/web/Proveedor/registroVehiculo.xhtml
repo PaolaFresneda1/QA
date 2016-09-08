@@ -1,0 +1,214 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
+
+    <body>
+
+        <ui:composition template="./plantillaProveedor.xhtml">
+
+            <ui:define name="links">
+                <link href="../RecursosPrincipal/css/formValidation.css" rel="stylesheet" type="text/css"/>
+            </ui:define>
+
+            <ui:define name="tituloPag">
+                <title>Registro vehiculo | Proveedor</title>
+            </ui:define>
+
+            <ui:define name="nombrePagina">
+                <h1><i class="fa fa-truck"></i> Vehiculo</h1>
+            </ui:define>
+
+            <ui:define name="migasPan">
+                <li><a href="index.xhtml">Inicio</a></li>
+                <li><a href="#">Gestión pedidos</a></li>
+                <li><a href="ofertas.xhtml">Ofertas</a></li>
+                <li><a href="reportes.xhtml">Conductor</a></li>
+                <li class="active">Vehiculo</li>
+            </ui:define>
+            <ui:define name="menuVehiculo">
+                <li  class='current'>
+                    <a  class='current' href="registroVehiculo.xhtml">
+                        <span class="badge pull-right"></span>
+                        <i class="fa fa-truck"></i> Registrar vehiculo
+                    </a>
+                </li>
+            </ui:define>
+
+
+            <ui:define name="contenido">
+
+                <c:if test= "#{controladorVehiculo.estados == 1}">
+                    <div class="alert alert-success" role="alert">
+                        El vehiculo ha sido registrado correctamente 
+                    </div>
+                </c:if>
+                <c:if test= "#{controladorVehiculo.estados == 2}">
+                    <div class="alert alert-danger" role="alert">
+                        El vehiculo ya se encuentra registrado 
+                    </div>
+                </c:if>
+
+                <h:form id="registroVehiculo" class="form-horizontal">
+
+
+                    <!-- Placa-->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="placaVehiculo">Placa</label>  
+                        <div class="col-md-4">
+                            <input id="placaVehiculo" name="placaVehiculo" type="text" placeholder="Digite la placa de su vehiculo" class="form-control input-md" required=""></input>
+
+                        </div>
+                    </div>
+
+                    <!--idProveedor-->
+                    <input name="idProveedor" type="hidden" value="#{controladorUsuario.objUsuarioLogin.idUsuario}"></input>
+
+                    <!-- Marca-->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="marca">Marca</label>  
+                        <div class="col-md-4">
+                            <input id="marca" name="marca" type="text" placeholder="Digite la marca de su vehiculo" class="form-control input-md"></input>
+
+                        </div>
+                    </div>
+
+                    <!-- Tipo Vehiculo -->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="tipoVehiculo">Tipo Vehiculo</label>
+                        <div class="col-md-4">
+                            <select id="tipoVehiculo" name="tipoVehiculo" class="form-control">
+                                <option selected="true" disabled="true">--Seleccione un tipo--</option>
+                                <option value="Camion">Camion</option>
+                                <option value="Mula">Mula</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Capacidad-->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="capacidad">Capacidad</label>  
+                        <div class="col-md-4">
+                            <input id="capacidad" name="capacidad" type="text" placeholder="Digite la capacidad del vehiculo" class="form-control input-md" required=""></input>
+
+                        </div>
+                    </div>
+
+                    <!--Empresa-->
+                    <input name="empresa" type="hidden" value="#{controladorUsuario.objUsuarioLogin.proveedor.empresa}"></input>
+                    <!--Nit-->
+                    <input name="nit" type="hidden" value="#{controladorUsuario.objUsuarioLogin.proveedor.nit}"></input>
+
+                    <!--Registrar Vehiculo -->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="registrarVehiculo"></label>
+                        <div class="col-md-4">
+                            <h:commandButton id="registrarVehiculo" class="btn btn-success" value="Registrar Vehiculo" action="#{controladorVehiculo.nuevoVehiculo()}"></h:commandButton>
+                        </div>
+                    </div>
+
+                </h:form>
+
+
+                <!--Pre Carga-->
+
+                <h4>Cargar datos desde excel</h4>
+                <h:form p:action="/EffectiveOrdersProyecto/controladorPrecarga" id="formArch" enctype="multipart/form-data" class="form-inline">
+                    <div class="form-group">
+                        <h:inputFile id="archivo"></h:inputFile>
+                    </div>
+                    &nbsp;&nbsp;
+                    <h:commandButton value="Cargar Archivo" class="btn btn-default" ></h:commandButton>
+                </h:form>
+                <!---->
+            </ui:define>
+
+            <ui:define name="scripts">
+                <script src="../RecursosModulos/js/bootstrap.js" type="text/javascript"></script>
+                <script src="../RecursosModulos/js/formValidation.min.js" type="text/javascript"></script>
+                <script src="../RecursosModulos/js/Validator.js" type="text/javascript"></script>
+                <script src="../RecursosModulos/js/es_ES.js" type="text/javascript"></script>
+
+                <script>
+                    $().ready(function () {
+
+                        $('#registroVehiculo').formValidation({// Validación datos capa cliente. TENER PRESENTE EL ID DEL FORM
+                            err: {container: 'tooltip'}, //muestra en tooltips
+                            icon: {valid: 'fa fa-check-circle', invalid: 'fa fa-times-circle', validating: 'fa fa-refresh'}, //iconos
+                            //locale: 'es_ES', //idioma - debe enlazar el archivo "es_ES.js"
+                            fields: {
+                                placaVehiculo: {//Validar con los aributos NAME de cada INPUT
+                                    row: '.form-group',
+                                    validators: {
+                                        notEmpty: {
+                                            message: 'Ingrese una placa válida'
+                                        },
+                                        regexp: {
+                                            regexp: /^[0-9a-zA-Z]+$/,
+                                            message: 'Letras y números'
+                                        },
+                                        stringLength: {
+                                            min: 5,
+                                            message: 'Minimo 5 caracteres'
+                                        }
+                                    }
+
+                                },
+                                marca: {//Validar con los aributos NAME de cada INPUT
+                                    row: '.form-group',
+                                    validators: {
+                                        notEmpty: {
+                                            message: 'Ingrese una marca válida '
+
+                                        },
+                                        regexp: {
+                                            regexp: /^[a-zA-ZñÑáéíóúÁÉÍÓÚ]+$/,
+                                            message: 'Solo letras, sin números o caracteres especiales'
+                                        },
+                                        stringLength: {
+                                            min: 3,
+                                            message: 'Minimo 3'
+                                        }
+                                    }
+                                },
+                                tipoVehiculo: {
+                                    row: '.form-group',
+                                    validators: {
+                                        notEmpty: {
+                                            message: 'Ingrese un tipo de vehiculo válido'
+                                        }
+                                    }
+                                },
+                                capacidad: {//Validar con los aributos NAME de cada INPUT
+                                    row: '.form-group',
+                                    validators: {
+                                        notEmpty: {
+                                            message: 'Ingrese una capacidad válida'
+                                        },
+                                        regexp: {
+                                            regexp: /^[0-9]+$/,
+                                            message: 'Solo números'
+                                        },
+                                        stringLength: {
+                                            min: 2,
+                                            message: 'Minimo 2 caracteres'
+                                        }
+                                    }
+
+                                }
+                            }
+                        });
+                    });
+
+
+                </script>
+
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

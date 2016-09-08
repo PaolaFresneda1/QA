@@ -1,0 +1,103 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+    
+
+    <body>
+
+        <ui:composition template="./plantillaCliente.xhtml">
+
+            <ui:define name="links">
+                links
+            </ui:define>
+
+            <ui:define name="tituloPag">
+                <title>Cargar datos | Effective Orders</title>            
+            </ui:define>
+
+            <ui:define name="menu">
+                <ul class="side-menu side-menu-green">
+                    <li >
+                        <a href="index.xhtml">
+                            <span class="badge pull-right">15</span>
+                            <i class="icon-home"></i> Inicio
+                        </a>
+                    </li>
+                </ul>
+                <!--Menu izquierdo inferior-->
+                <div class="relative-w">
+                    <ul class="side-menu side-menu-green">
+                        <li>
+                            <a href="pedidos.xhtml">
+                                <i class="icon-shopping-cart"></i> Solicitar pedidos
+                            </a>
+                        </li>
+                        <li>
+                            <a href="ofertas.xhtml">
+                                <span class="badge pull-right">13</span>
+                                <i class="icon-usd"></i> Ofertas
+                            </a>
+                        </li>
+                        <li>
+                            <a href="reportes.xhtml">
+                                <span class="badge pull-right">3</span>
+                                <i class="icon-check"></i> Reportes
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="icon-file-text"></i> Información adicional
+                            </a>
+                        </li>
+                        <li class='current'>
+                            <a class='current' href="cargueDatos.xhtml">
+                                <i class="icon-file-text"></i> Cargar datos
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </ui:define>
+
+            <ui:define name="nombrePagina">
+                <h1><i class="icon-upload"></i> Cargue de datos</h1>
+            </ui:define>
+
+            <ui:define name="migasPan">
+                <li><a href="index.xhtml">Inicio</a></li>
+                <li><a href="solicitarPedido.xhtml">Solicitar pedidos</a></li>
+                <li><a href="ofertas.xhtml">Ofertas</a></li>
+                <li><a href="reportes.xhtml">Reportes</a></li>
+                <li class="active">Cargar datos</li>
+            </ui:define>
+
+            <ui:define name="contenido">
+                <legend>Cargue de datos desde Excel</legend>
+                <h:form  p:action="../../ControladorPrecarga" id="UploadForm" enctype="multipart/form-data"  >
+                    
+                    <div class="form-group">
+                        <div class="col-md-4">
+                              <h:inputFile value="Cargar Archivo" id="file"/> 
+                        </div>
+                    </div>
+                    <br></br><br></br><br></br>
+                   <div class="form-group">
+                        <div class="col-md-4">
+                            <h:commandButton value="enviar"/>
+                        </div>
+                    </div>
+                   
+                    
+                </h:form>
+            </ui:define>
+
+            <ui:define name="scripts">
+                scripts
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

@@ -1,0 +1,398 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <body>
+
+        <ui:composition template="./plantillaCliente.xhtml">
+
+            <ui:define name="links">
+                <link rel="stylesheet" href="../RecursosModulos/css/jquery-ui.css"></link>
+                <script src="../RecursosModulos/js/validacionFormularioSolicitud.js"></script>
+                <script src="../RecursosModulos/js/jquery-ui.js"></script>
+
+                <script>
+                    function precio(temp, palabra) {
+                        pcantidad = temp.value;
+                        pvalor = document.getElementById("formularioSolicitudPedido" + palabra + ":precioProduc").value;
+                        precioTotal = (pcantidad * pvalor);
+                        document.getElementById('precioPedido' + palabra).value = precioTotal;
+                    }
+                </script>
+
+                <script>
+                    $(function () {
+                        $.datepicker.regional['es'] =
+                                {
+                                    closeText: 'Cerrar',
+                                    prevText: 'Previo',
+                                    nextText: 'Próximo',
+                                    monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+                                    monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+                                    monthStatus: 'Ver otro mes', yearStatus: 'Ver otro año',
+                                    dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+                                    dayNamesShort: ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sáb'],
+                                    dayNamesMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa'],
+                                    dateFormat: 'dd/mm/yy', firstDay: 0,
+                                    initStatus: 'Selecciona la fecha', isRTL: false};
+                        $.datepicker.setDefaults($.datepicker.regional['es']);
+                        $("#fEntrega").datepicker({minDate: 3, dateFormat: 'yy-mm-dd', beforeShowDay: $.datepicker.noWeekends});
+                    });
+                </script>
+
+                <script>
+                    $(document).ready(function () {
+                        $("span.input-group-addon").on("click", function () {
+                            $("#fecha").datepicker("show");
+                        });
+                    });
+                </script>
+
+            </ui:define>
+
+            <ui:define name="tituloPag">
+                <title>Solicitud pedidos | Effective orders</title>
+            </ui:define>
+
+            <ui:define name="menuSolicitarPedido">
+                <li class="current">
+                    <a class="current" href="solicitarPedido_1.xhtml">
+                        <i class="fa fa-shopping-cart"></i> Solicitar pedidos
+                    </a>
+                </li>
+            </ui:define>
+
+            <ui:define name="nombrePagina">
+                <h1><i class="fa fa-shopping-cart"></i> Solicitar pedidos</h1>
+            </ui:define>
+
+            <ui:define name="migasPan">
+                <li><a href="index.xhtml">Inicio</a></li>
+                <li class="active">Solicitar pedidos</li>
+            </ui:define>
+
+            <ui:define name="contenido">
+                <legend>Solicitar Pedido <div id="ayuda" class="center" style="margin-right: 50px"><div class="tip" data-tip="Aquí puede solicitar pedidos, recuerde que todos los campos son obligatorios."><i class="fa fa-question-circle"></i></div></div></legend>
+
+
+                <div class="row">
+                    <c:forEach var="objProducto" items="#{controladorProducto.listarProductos()}">
+                        <div class="col-sm-4">
+                            <div class="panel greenPanel">
+                                <div id="tituloPedidos" class="#{objProducto.nombreProducto eq 'Aguacate'?'panel-heading panelGreen':'' or objProducto.nombreProducto eq 'Pitaya' ? 'panel-heading  panelYellow':'' or objProducto.nombreProducto eq 'Guanabana' ? 'panel-heading panelGray':''}">
+                                    <div id="tituloPedidos" class="panel-title">#{objProducto.nombreProducto}</div>
+                                </div>
+                                <div class="panel-body">
+                                    <img class="img-responsive img-circle" src="#{objProducto.nombreProducto eq 'Aguacate'?'../RecursosModulos/images/productos/aguacate.jpg':'' or objProducto.nombreProducto eq 'Pitaya'?'../RecursosModulos/images/productos/pitaya.jpg':'' or objProducto.nombreProducto eq 'Guanabana' ? '../RecursosModulos/images/productos/guanabana.jpg':''}"></img>
+                                    <div id="textoPedidos">
+                                        <p>Precio por kilogramo:<br></br>$#{objProducto.precio}</p>
+                                    </div>
+                                </div>
+
+                                <div class="#{objProducto.nombreProducto eq 'Aguacate'?'panel-heading panelGreen':'' or objProducto.nombreProducto eq 'Pitaya' ? 'panel-heading  panelYellow':'' or objProducto.nombreProducto eq 'Guanabana' ? 'panel-heading panelGray':''}">
+                                    <button type="button" class="btn btn-default btn-lg btn-block contact" data-toggle="modal" data-target="#registro#{objProducto.codigoProducto}" style="font-size: 16px">
+                                        <span class="fa fa-shopping-cart"></span> Añadir al carrito</button>
+                                </div>
+
+                            </div>
+                        </div>
+                        <!-- INICIO MODAL AGREGAR PRODUCTO A CARRITO-->
+
+                        <div class="modal fade" id="registro#{objProducto.codigoProducto}" role="dialog">
+                            <div class="modal-content modal-sm" role="dialog" style="width: 750px;margin-left: 400px;margin-top: 50px;">
+
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                    <div class="modal-body">
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        <div id="icono"  style="font-size: 60px; text-align: center">
+                                            <i class="fa fa-shopping-cart"></i>
+                                            <legend>Añadir producto (#{objProducto.nombreProducto})</legend>
+                                        </div>
+                                        <h:form id="formularioSolicitudPedido#{objProducto.codigoProducto}" class="form-horizontal" style="margin-left: 50px; margin-top: 50px;">
+                                            <input id="idProductoOculto" name="idProductoOculto" type="hidden" value="#{objProducto.codigoProducto}"></input>
+                                            <!-- Seleccionar cantidad-->
+                                            <div class="form-group">
+                                                <label class="col-md-4 control-label" for="cantidadProducto">Cantidad</label>
+                                                <div class="col-md-5">
+                                                    <input type="number" id="cantidadProducto" name="cantidadProducto"  min="40" max="200" placeholder="Kilogramos" class="form-control input-md" onchange="precio(this,#{objProducto.codigoProducto})" value="0" required="true"></input>
+                                                </div>
+                                            </div>
+
+                                            <!-- Clasificacion producto -->
+                                            <div class="form-group ">
+                                                <div id="ayuda" style="font-size:1.5em; margin-right:144px;"><div class="tip" data-tip="Baja: Solo pulpa. Alta: Fruta "><i class=" fa fa-question-circle"></i></div></div>
+                                            
+                                                <label class="col-md-4 control-label" for="clasificacionProducto">Clasificación: </label>                           
+
+                                                <div class="col-md-5"> 
+                                                    <select id="clasificacionProducto" name="clasificacionProducto" class="form-control" required="true" title="Select one of these options">
+                                                        <option selected="true" disabled="true">--Seleccione una clasificación--</option>
+                                                        <option value="Baja">Baja</option>
+                                                        <option value="Alta">Alta</option>
+                                                    </select>
+                                                </div>
+
+                                            </div>
+
+
+                                            <!-- Precio -->
+                                            <div class="form-group">
+                                                <label class="col-md-4 control-label" for="precioPedido">Precio Total</label>
+                                                <div class="col-md-5"> 
+                                                    <label class="sr-only" for="precioPedido"> Precio (in COP)</label>
+                                                    <div class="input-group">
+                                                        <div class="input-group-addon fa fa-usd"></div>
+                                                        <input type="text" id="precioPedido#{objProducto.codigoProducto}" name="precioPedido" class="form-control"  placeholder="Precio Total" readonly="true" value="0"></input>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- Cedula -->
+                                            <div class="form-group hidden">
+                                                <label class="col-md-4 control-label" for="cedulaCliente">Cedula</label>  
+                                                <div class="col-md-5">
+                                                    <input type="text" id="cedulaCliente" name="cedulaCliente" class="form-control input-md" readonly="true" value="#{controladorUsuario.objUsuarioLogin.idUsuario}"></input>
+                                                </div>
+                                            </div>
+                                            <h:inputText class="hidden" id="precioProduc" value="#{objProducto.precio}"></h:inputText>  
+
+                                            <!-- Boton -->
+                                            <div id="boton">
+                                                <div class="form-group">
+                                                    <label class="col-md-4 control-label" for="boton"></label>
+                                                    <h:commandButton class="btn btn-success" type="submit"  value="Añadir" style="float: right; margin-right: 190px;" action="#{controladorProducto.carritoProductos()}"></h:commandButton>
+                                                </div>
+                                            </div>
+                                        </h:form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- FIN MODAL AGREGAR PRODUCTO A CARRITO-->
+
+
+                    </c:forEach>
+                </div>
+                <br></br> <br></br>
+                <legend>Carrito de pedidos</legend>
+                <div id="carrito">
+                    <table class="table table-bordered table-condensed table-responsive">
+                        <thead>
+                            <tr>
+                                <th>Producto</th>
+                                <th>Cantidad</th>
+                                <th>Clasificación</th>
+                                <th>Precio</th>
+                                <th>Opciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <c:forEach var="objCarrito" items="#{controladorProducto.leerCarrito()}">
+                            <tr>
+                                <td>#{objCarrito.producto.codigoProducto eq 1 ?'Pitaya':'' or objCarrito.producto.codigoProducto eq 2 ?'Guanabana':'' or objCarrito.producto.codigoProducto eq 3 ?'Aguacate':''}</td>
+                                <td>#{objCarrito.cantidad}</td>
+                                <td>#{objCarrito.clasificacion}</td>
+                                <td>$#{objCarrito.precioTotal}</td>
+                                <td>
+                                    <button href="#" class="btn  btn-xs" title="Editar"><i class="fa fa-pencil"></i></button>
+                                    <button href="#" class="btn  btn-xs" title="Cancelar" onclick="mensajeConfirmar()"><i class="fa fa-trash-o"></i></button>    
+                                </td>
+                            </tr>
+                            </c:forEach>
+                        </tbody>
+                    </table>
+                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#carro" style="font-size: 16px; margin-left: 755px"> Enviar carrito</button>
+                </div>
+
+
+
+
+
+                <!-- INICIO MODAL DATOS CARRITO-->
+                <div class="modal fade" id="carro" role="dialog">
+                    <div class="modal-content" role="dialog" style="width: 750px;margin-left: 400px;margin-top: 50px;">
+
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <div class="modal-body">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+                                <div id="icono"  style="font-size: 60px; text-align: center">
+                                    <i class="fa fa-list-ol"></i>
+                                    <legend>Datos carrito</legend>
+                                </div>
+
+                                <h:form id="formularioCarrito" class="form-horizontal" style="margin-left: 50px; margin-top: 50px;">
+
+
+                                    <!-- Direccion -->
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label" for="direccion">Dirección de entrega</label>  
+                                        <div class="col-md-5">
+                                            <input type="text" id="direccion" name="direccion" class="form-control input-md"></input>
+                                        </div>
+                                    </div>
+                                    <!-- Fecha entrega -->
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label" for="fEntrega">Fecha entrega</label>
+                                        <div class="col-md-5"> 
+                                            <div class="input-group">
+                                                <span class="input-group-addon fa fa-calendar"></span>
+                                                <input type="text" name="fEntrega" id="fEntrega" readonly="readonly" class="form-control clsDatePicker"></input>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Comentarios-->
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label" for="comentariosPedido">Comentarios</label>
+                                        <div class="col-md-5">                     
+                                            <textarea class="form-control" id="comentariosPedido" name="comentariosPedido" placeholder="Escriba sus comentarios aquí" ></textarea>
+                                        </div>
+                                    </div>
+                                    <!-- Boton -->
+                                    <div id="boton">
+                                        <div class="form-group">
+                                            <label class="col-md-4 control-label" for="boton"></label>
+                                            <h:commandButton class="btn btn-success" type="submit" action="#{controladorPedido.generarPedido()}"  value="Solicitar" style="float: right; margin-right: 190px;"></h:commandButton>
+                                        </div>
+                                    </div>
+
+                                </h:form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- FIN MODAL DATOS CARRITO-->
+
+                <!-- INICIO MODAL EDITAR PEDIDOS-->
+                <div class="modal fade" id="editar" role="dialog">
+                    <div class="modal-content" role="dialog" style="width: 750px;margin-left: 400px;margin-top: 50px;">
+
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <div class="modal-body">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <div id="icono"  style="font-size: 60px; text-align: center">
+                                    <i class="fa fa-pencil"></i>
+                                    <legend>Editar pedido</legend>
+                                </div>
+                                <h:form id="formularioEditarPedido" class="form-horizontal" style="margin-left: 50px; margin-top: 50px;">
+
+                                    <!-- Seleccionar producto -->
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label" for="nombreProducto">Producto</label>
+                                        <div class="col-md-5">
+                                            <select id="nombreProducto" name="nombreProducto" class="form-control" required="true" onchange="valores()">
+                                                <option selected="true" disabled="true" value="1">--Seleccione un producto--</option>
+                                                <c:forEach var="objProducto" items="#{controladorProducto.listarProductos()}">
+                                                    <option value="#{objProducto.codigoProducto}" selected="#{controladorPedido.codigoProducto==objProducto.codigoProducto ? true:''}" >#{objProducto.nombreProducto}</option>
+                                                </c:forEach>
+                                            </select>
+
+                                            <label id='precioU' class="col-md-12 control-label"  for="precioUnitario" style="float: right; font-size: 15px;">Precio por kilogramo: &nbsp; <span>#{controladorPedido.precio}</span> </label>  
+                                        </div>
+                                    </div>
+
+                                    <!-- Seleccionar cantidad-->
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label" for="cantidadProducto">Cantidad</label>
+                                        <div class="col-md-5">
+                                            <input type="number" id="cantidadProducto" name="cantidadProducto"  min="40" max="200" placeholder="Kilogramos" class="form-control input-md" onchange="Calcular(this)" value="0" required="true"></input>
+                                        </div>
+                                    </div>
+
+                                    <!-- Clasificacion producto -->
+                                    <div class="form-group">
+                                        <div id="ayuda" class="center col-md-1" style="font-size:1.5em; margin-right: 116px; margin-top:5px"><div class="tip" data-tip="Baja: Solo pulpa. Alta: Fruta "><i class=" fa fa-question-circle"></i></div></div>
+                                        <label class="col-md-4 control-label" for="clasificacionProducto">Clasificación</label>
+                                        <div class="col-md-5" required="true"> 
+                                            <select id="clasificacionProducto" name="clasificacionProducto" class="form-control" required="true" title="Select one of these options">
+                                                <option selected="true" disabled="true">--Seleccione una clasificación--</option>
+                                                <option value="Baja">Baja</option>
+                                                <option value="Alta">Alta</option>
+                                            </select>
+                                        </div>
+
+                                    </div>
+
+                                    <!-- Precio -->
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label" for="precioPedido">Precio Total</label>
+                                        <div class="col-md-5"> 
+                                            <label class="sr-only" for="precioPedido"> Precio (in COP)</label>
+                                            <div class="input-group">
+                                                <div class="input-group-addon fa fa-usd"></div>
+                                                <input type="text" id="precioPedido" name="precioPedido" class="form-control"  placeholder="Precio Total" readonly="true" value="0"></input>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <!-- Cedula -->
+                                    <div class="form-group hidden">
+                                        <label class="col-md-4 control-label" for="cedulaCliente">Cedula</label>  
+                                        <div class="col-md-5">
+                                            <input type="text" id="cedulaCliente" name="cedulaCliente" class="form-control input-md" readonly="true" value="#{controladorUsuario.objUsuarioLogin.idUsuario}"></input>
+                                        </div>
+                                    </div>
+
+                                    <!-- Boton -->
+                                    <div id="boton">
+                                        <div class="form-group">
+                                            <label class="col-md-4 control-label" for="boton"></label>
+                                            <h:commandButton class="btn btn-success" type="submit"  value="Añadir" style="float: right; margin-right: 190px;"></h:commandButton>
+                                        </div>
+                                    </div>
+                                    <h:form id="formularioOculto">
+                                        <h:inputHidden id="oculto" value="#{controladorPedido.codigoProducto}"></h:inputHidden>
+                                        <h:inputHidden id="precioO" value="#{controladorPedido.precio}"></h:inputHidden>
+                                        <h:commandButton class="hidden" id="miBoton"  action="#{controladorPedido.consultarProducto()}" value="botonO"></h:commandButton>
+                                    </h:form>
+                                </h:form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- FIN MODAL EDITAR PEDIDOS-->
+
+                <!-- INICIO MODAL ELIMINAR PRODUCTO CARRITO-->
+                <div class="modal fade" id="eliminar" role="dialog">
+                    <div class="modal-content" role="dialog" style="width: 750px;margin-left: 400px;margin-top: 50px;">
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <div class="modal-body">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <div id="cancelar" style="margin-left:300px; width:150px; height: 150px;">
+                                    <img src="../RecursosModulos/images/exclamation.png"></img>
+                                </div>
+                                <h6 style="font-weight: bold;">¿Está seguro de eliminar el pedido del carrito?</h6>
+                                <br></br>
+                                <p>Recuerde que una vez eliminado no podra recuperar su solicitud.</p>
+                                <br></br>
+                                <h:form>
+                                    <div id="botones" style="margin-left: 300px">
+                                        <h:commandButton class="btn btn-danger" value="Eliminar" style="margin-right: 15px;" action="#{controladorPedido.cancelarPedido(objPedido)}"></h:commandButton>
+                                        <h:commandButton class="btn btn-info" value="Salir"></h:commandButton>
+                                    </div>
+                                </h:form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- FIN MODAL ELIMINAR PRODUCTO CARRITO-->
+
+
+
+
+
+
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

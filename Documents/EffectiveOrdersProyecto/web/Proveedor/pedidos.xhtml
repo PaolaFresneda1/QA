@@ -1,0 +1,159 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <body>
+
+        <ui:composition template="./plantillaProveedor.xhtml">
+
+            <ui:define name="links">
+            </ui:define>
+
+            <ui:define name="tituloPag">
+                <title>Pedidos | Proveedor</title>
+            </ui:define>
+
+            <ui:define name="nombrePagina">
+                <h1><i class="fa fa-shopping-cart"></i> Pedidos</h1>
+            </ui:define>
+
+            <ui:define name="menuGestionarPedidos">
+                <li class="current">
+                    <a href="#" class="current is-dropdown-menu">
+                        <i class="fa fa-sort-amount-desc"></i><span>Gestión Pedidos</span>
+                    </a>
+                    <ul style="display: none;">
+                        <li>
+                            <a class="current" href="pedidos.xhtml">
+                                <span class="badge pull-right">15</span>
+                                <i class="fa fa-shopping-cart"></i><span>
+                                    Aportes</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="tablaPedidos.xhtml">
+                                <span class="badge pull-right">15</span>
+                                <i class="fa fa-usd"></i><span>
+                                    Pedidos</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ui:define>
+
+            <ui:define name="migasPan">
+                <li><a href="index.xhtml">Inicio</a></li>
+                <li><a href="tablaPedidos.xhtml">Gestión pedidos</a></li>
+                <li class="active">Aportes</li>
+            </ui:define>
+
+            <ui:define name="contenido">
+                <legend class="legend">Aportes</legend>
+                <div class="row">  
+                    <c:forEach items="#{controladorPedidoProducto.misAportes()}" var="lista">
+                        <c:if test="#{lista.cantidadPedido > 500 }">
+                            <div class="col-sm-4"> 
+                                <div class="page-header page-header-green" style="background-color: #{lista.cantidad le 300 ? '#006666':'' or lista.cantidad le 600 ? '#cccc00':'' or lista.cantidad ge 601 ? '#ff3300':''}">
+                                    <h4>#{lista.producto.nombreProducto}</h4>
+                                </div>
+                                <div class="panel panel-success">
+                                    <div class="panel-heading">
+                                        <p> Cantidad: #{lista.cantidad}</p>
+                                        <p> Destino: #{lista.pedido.cedulaCliente.usuario.idCiudad.nombreCiudad}</p>
+                                        <p> Cliente: #{lista.pedido.cedulaCliente.usuario.nombre} #{lista.pedido.cedulaCliente.usuario.apellido}</p>
+                                        <button  class="btn btn-success" disabled="#{lista.cantidad eq 0 ? 'true':''}" type="button" title="Inactivo"  data-toggle="modal" data-target="#eliminar#{lista.pedidoproductoPK.codigoProducto}#{lista.pedidoproductoPK.idPedidoProducto}">» Aportar !</button> 
+                                    </div>
+                                </div>
+
+                                <div class="modal fade" id="eliminar#{lista.pedidoproductoPK.codigoProducto}#{lista.pedidoproductoPK.idPedidoProducto}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                    <div class="modal-content" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                <h4 class="modal-title" id="myModalLabel" style="text-align: center; color: #fff;">Registrar Aporte</h4>
+                                            </div>
+                                            <div class="modal-content">
+                                                <div id="formularioAporte" class="container"> 
+                                                    <div class="row">
+                                                        <div class="box">
+                                                            <div class="col-md-12">
+
+                                                                <h:form id="formularioAporte" class="form-horizontal">
+                                                                    <div class="form-group hidden">
+                                                                        <label class="col-md-4 control-label" for="cedulaCliente">Cedula</label>  
+                                                                        <div class="col-md-4">
+                                                                            <input type="text" id="cedulaCliente" name="cedulaCliente" class="form-control input-md" readonly="true" value="#{controladorUsuario.objUsuarioLogin.idUsuario}"></input>
+                                                                        </div>
+                                                                    </div>
+                                                                    <legend class="legend">Aporte a pedidos </legend>
+
+                                                                    <input name="ocultoIdPedido" type="hidden" value="#{lista.pedidoproductoPK.idPedidoProducto}"></input>
+                                                                    <input name="ocultoIdPedroducto" type="hidden" value="#{lista.producto.codigoProducto }"></input>
+                                                                    <input name="idProveedor" type="hidden" value="#{controladorUsuario.objUsuarioLogin.idUsuario}"></input>
+
+                                                                    <!-- Cantidad-->
+
+                                                                    <div class="form-group">
+                                                                        <label class="col-md-4 control-label" for="CantidadAporte">Cantidad a Aportar</label>
+                                                                        <div class="col-md-6">
+                                                                            <input id="CantidadAporte" name="CantidadAporte" maxlength="3" type="number" value="" min="#{lista.cantidad eq lista.cantidadPedido ? lista.cantidad/2:lista.cantidad}" max="#{lista.cantidad}" placeholder="Unidades" class="form-control input-md" required="true" tabindex="2"></input>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <!-- Clasificacion -->
+                                                                    <div class="form-group">
+                                                                        <label class="col-md-4 control-label" for="clasificacion">Clasificación:</label>
+                                                                        <div class="col-md-6">
+                                                                            <input disabled="true" id="clasificacion" value="#{lista.clasificacion}" type="text" class="form-control"  required="true" tabindex="4"></input>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <!-- Direccion-->
+
+                                                                    <div class="form-group">
+                                                                        <label class="col-md-4 control-label" for="direccion">Dirección de entrega</label>
+                                                                        <div class="col-md-6">
+                                                                            <input disabled="true" id="direccion" value="#{lista.pedido.direccion}" name="direccion" type="text" min="1000" max="3000" placeholder="Direccion" class="form-control input-md" required="true" tabindex="5"></input>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <!--Boton de registro-->
+                                                                    <div id="boton">
+                                                                        <div class="form-group">
+                                                                            <label class="col-md-4 control-label" for="Boton"></label>
+                                                                            <div class="col-md-6">
+                                                                                <h:commandButton id="aportepedido"  value="Aportar"  type="submit" class="btn btn-success" action="#{controladorAporte.registrarAporte()}"></h:commandButton>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </h:form>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </c:if>
+                    </c:forEach>
+                </div>
+
+
+
+
+            </ui:define>
+
+            <ui:define name="scripts">               
+                <script src="../resources/js/bootstrap.min.js"></script>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

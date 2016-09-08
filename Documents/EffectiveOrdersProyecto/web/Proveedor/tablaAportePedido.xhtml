@@ -1,0 +1,138 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <body>
+
+        <ui:composition template="./plantillaProveedor.xhtml">
+
+            <ui:define name="links">
+                <link rel='stylesheet' href='../RecursosModulos/css/datatables/bootstrap.datatables.css'></link>
+                <link rel='stylesheet' href='../RecursosModulos/css/datatables/jquery.dataTables.css'></link>          
+            </ui:define>
+            <ui:define name="tituloPag">
+                <title>Aporte a pedidos | Proveedor</title>
+            </ui:define>
+
+
+            <ui:define name="nombrePagina">
+                <h1><i class="fa fa-plus"></i> Aportes a pedidos</h1>
+            </ui:define>
+
+            <ui:define name="migasPan">
+                <li><a href="index.xhtml">Inicio</a></li>
+                <li><a href="#">Gestión pedidos</a></li>
+                <li><a href="ofertas.xhtml">Ofertas</a></li>
+                <li><a href="registroConductor.xhtml">Conductor</a></li>
+                <li><a href="registroVehiculo.xhtml">Vehiculo</a></li>
+                <li><a href="registroEnvio.xhtml">Envios</a></li>
+                <li><a href="#">Reportes</a></li>
+                <li class="active">Aporte pedido</li>
+            </ui:define>
+
+            <ui:define name="menuReportes">
+                <li class="current">
+                    <a href="#" class="current is-dropdown-menu">
+                        <i class="fa fa-sort-amount-desc"></i><span>Reportes</span>
+                    </a>
+                    <ul style="display: none;">
+                        <li>
+                            <a href="tablaAportePedido.xhtml">
+                                <span class="badge pull-right"></span>
+                                <i class="fa fa-plus"></i><span>
+                                    Aportes</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="tablaPedidos.xhtml">
+                                <span class="badge pull-right"></span>
+                                <i class="fa fa-shopping-cart"></i><span>
+                                    Pedidos</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="tablaOfertas.xhtml">
+                                <span class="badge pull-right"></span>
+                                <i class="fa fa-usd"></i><span>
+                                    Ofertas</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="tablaConductores.xhtml">
+                                <span class="badge pull-right"></span>
+                                <i class="fa fa-user"></i><span>
+                                    Conductores</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="tablaEnvios1.xhtml">
+                                <span class="badge pull-right"></span>
+                                <i class="fa fa-road"></i><span>
+                                    Envios</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ui:define>
+
+            <ui:define name="contenido">
+                <div class="widget">
+                    <div class="widget-content-white glossed "  id="htmlexportPDF">
+                        <div class="padded responsive-utilities-test table-responsive" >
+                            <table id="testTable" class="table table-striped table-bordered table-hover datatable" >
+                                <thead>
+                                    <tr>
+                                        <th>Código</th>
+                                        <th>Cliente</th>
+                                        <th>Ciudad</th>
+                                        <th>Cantidad</th>
+                                        <th>Producto</th>
+                                        <th>Dirección</th>
+                                        <th>Estado</th>
+                                        <th>Opciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <c:forEach items="#{controladorAporte.listarAportes()}" var="objLista">
+                                        <c:if test="#{controladorUsuario.objUsuarioLogin.idUsuario == objLista.cedulaProveedor.cedulaProveedor }">
+
+                                            <tr>
+                                                <td>#{objLista.idAporte}</td>
+                                                <td>#{objLista.idPedido.cedulaCliente.usuario.nombre} #{objLista.idPedido.cedulaCliente.usuario.apellido}</td>
+                                                <td>#{objLista.idPedido.cedulaCliente.usuario.idCiudad.nombreCiudad}</td>
+                                                <td class="text-right">#{objLista.cantidadAportada} unidades</td>
+                                                <td class="text-right ">#{objLista.idPedido.direccion} </td>
+                                                <td class="text-right">#{objLista.idProducto.nombreProducto} </td>
+
+                                                <td><span class="#{objLista.idPedido.estado eq 'Pendiente' ? 'label label-warning':'' or objLista.idPedido.estado eq 'Aceptado' ? 'label label-info':'' or objLista.idPedido.estado eq 'Entregado' ? 'label label-success':''}" style="font-size: 12.5px;">#{objLista.idPedido.estado}</span></td>
+
+                                                <td class="text-right">
+                                                    <a href="#" class="btn btn-default btn-xs"><span class="icon-search"></span> Ver todo</a>
+                                                </td>
+                                            </tr>
+                                        </c:if>
+                                    </c:forEach>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <input type="button" class="botonimagenexcel" id="excel"  onclick="tableToExcel('testTable')"></input>
+                        <input type="button" class="botonimagenpdf" id="pdf"  onclick="htmltopdf()"></input>
+                    </div>
+                    <p style="float: right; font-family: 'neoteric'; font-size: 20px; letter-spacing: 1px; font-weight: bold; margin-top: 10px;">Exportar tabla a:</p>
+                </div>
+
+            </ui:define>
+
+            <ui:define name="scripts">
+                <script src='../RecursosModulos/js/tables/dataTables.bootstrap.min'></script>
+                <script src='../RecursosModulos/js/tables/prueba.js'></script>
+                <script src='../RecursosModulos/js/tables/table.js'></script>
+            </ui:define>
+        </ui:composition>
+
+    </body>
+</html>

@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="1190" pageHeight="595" orientation="Landscape" columnWidth="1150" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="3ffb8fec-11e9-4cc4-a513-680781c12444">
+	<property name="ireport.zoom" value="0.8264462809917359"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" forecolor="#FFFFFF" fontName="Times New Roman" fontSize="50" isBold="false" pdfFontName="Times-Bold"/>
+	<style name="SubTitle" forecolor="#CCCCCC" fontName="Times New Roman" fontSize="18" isBold="false" pdfFontName="Times-Roman"/>
+	<style name="Column header" forecolor="#666666" fontName="Times New Roman" fontSize="14" isBold="true" pdfFontName="Times-Roman"/>
+	<style name="Detail" mode="Transparent" fontName="Times New Roman" pdfFontName="Times-Roman"/>
+	<style name="Row" mode="Transparent" fontName="Times New Roman" pdfFontName="Times-Roman">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style mode="Opaque" backcolor="#F0EFEF"/>
+		</conditionalStyle>
+	</style>
+	<queryString language="SQL">
+		<![CDATA[SELECT
+     pedido.`cedulaCliente` AS pedido_cedulaCliente,
+     pedido.`fechaDeSolicitud` AS pedido_fechaDeSolicitud,
+     pedido.`fechaEntrega` AS pedido_fechaEntrega,
+     pedido.`estado` AS pedido_estado,
+     pedidoproducto.`idPedido` AS pedidoproducto_idPedido,
+     pedidoproducto.`cantidad` AS pedidoproducto_cantidad,
+     pedidoproducto.`unidad` AS pedidoproducto_unidad,
+     pedidoproducto.`clasificacion` AS pedidoproducto_clasificacion,
+     pedidoproducto.`precioTotal` AS pedidoproducto_precioTotal,
+     pedidoproducto.`descuento` AS pedidoproducto_descuento,
+     productos.`nombreProducto` AS productos_nombreProducto
+FROM
+     `pedido` pedido INNER JOIN `pedidoproducto` pedidoproducto ON pedido.`idPedido` = pedidoproducto.`idPedido`
+     INNER JOIN `productos` productos ON pedidoproducto.`codigoProducto` = productos.`codigoProducto`]]>
+	</queryString>
+	<field name="pedidoproducto_idPedido" class="java.lang.Long"/>
+	<field name="productos_nombreProducto" class="java.lang.String"/>
+	<field name="pedidoproducto_cantidad" class="java.lang.Long"/>
+	<field name="pedidoproducto_unidad" class="java.lang.String"/>
+	<field name="pedidoproducto_clasificacion" class="java.lang.String"/>
+	<field name="pedidoproducto_descuento" class="java.lang.Integer"/>
+	<field name="pedidoproducto_precioTotal" class="java.lang.Integer"/>
+	<field name="pedido_fechaDeSolicitud" class="java.sql.Date"/>
+	<field name="pedido_fechaEntrega" class="java.sql.Date"/>
+	<field name="pedido_estado" class="java.lang.String"/>
+	<field name="pedido_cedulaCliente" class="java.lang.Long"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="124" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="0" y="0" width="1018" height="66" backcolor="#3FC929" uuid="06502f96-0e7f-4c14-ac4e-9890833dfcff"/>
+				<staticText>
+					<reportElement x="306" y="0" width="477" height="62" forecolor="#FFFFFF" uuid="c7d47b33-30cc-488c-8a23-fdadd17060db"/>
+					<textElement>
+						<font fontName="NEOTERIC" size="50"/>
+					</textElement>
+					<text><![CDATA[REPORTE PEDIDOS]]></text>
+				</staticText>
+			</frame>
+			<frame>
+				<reportElement mode="Opaque" x="0" y="69" width="1018" height="32" forecolor="#000000" backcolor="#56E643" uuid="9370a421-2e2a-4c01-ae58-8b3e3cdbf5e2"/>
+				<staticText>
+					<reportElement style="Column header" x="14" y="7" width="65" height="18" forecolor="#000000" uuid="2a838267-3b23-40ea-8dfd-ece5280a8c27"/>
+					<textElement>
+						<font fontName="GosmickSans" size="13" isBold="false"/>
+					</textElement>
+					<text><![CDATA[CLIENTE:]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" positionType="Float" x="75" y="6" width="72" height="18" uuid="db87fe60-aaa6-4005-9b5f-fdeb0124f7f7"/>
+					<textElement>
+						<font fontName="GosmickSans" size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{pedido_cedulaCliente}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="791" y="0" width="207" height="32" uuid="7e7d9fe9-00eb-458e-87c1-3e4513aceb87"/>
+					<textElement>
+						<font fontName="NEOTERIC" size="20" isBold="true"/>
+					</textElement>
+					<text><![CDATA[EFFECTIVE ORDERS]]></text>
+				</staticText>
+			</frame>
+			<image>
+				<reportElement x="1032" y="-2" width="118" height="109" uuid="e836a891-ad41-45a5-8c57-8d9b3c8fe4dc"/>
+				<imageExpression><![CDATA["C:\\Users\\Lina\\Downloads\\EffectiveProyecto\\web\\img\\logo-ultim.png"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="27" splitType="Stretch">
+			<staticText>
+				<reportElement style="Column header" x="10" y="0" width="102" height="18" forecolor="#000000" uuid="939854b7-917d-4b52-b6a6-1da135e8a98d"/>
+				<textElement>
+					<font fontName="GosmickSans" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CÓDIGO PEDIDO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="129" y="0" width="86" height="18" forecolor="#000000" uuid="9cad9d50-b812-4ae4-9f8e-7ac059df212d"/>
+				<textElement>
+					<font fontName="GosmickSans" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PRODUCTO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="326" y="1" width="57" height="18" forecolor="#000000" uuid="74ce997b-cdce-4571-9809-9ee70713aa4e"/>
+				<textElement>
+					<font fontName="GosmickSans" isBold="true"/>
+				</textElement>
+				<text><![CDATA[UNIDAD]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="403" y="0" width="99" height="18" forecolor="#000000" uuid="6ee975d1-2fb6-41a6-b2db-c3823cb61a26"/>
+				<textElement>
+					<font fontName="GosmickSans" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CLASIFICACIÓN]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="516" y="0" width="78" height="18" forecolor="#000000" uuid="898f06aa-01ef-4550-b716-4336838621f3"/>
+				<textElement>
+					<font fontName="GosmickSans" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DESCUENTO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="608" y="0" width="101" height="18" forecolor="#000000" uuid="3344868a-97e4-4239-a4ef-426a3cd375d5"/>
+				<textElement>
+					<font fontName="GosmickSans" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PRECIO TOTAL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="734" y="0" width="145" height="18" forecolor="#000000" uuid="979d4208-8ba5-404f-b842-404938fd5ce7"/>
+				<textElement>
+					<font fontName="GosmickSans" isBold="true"/>
+				</textElement>
+				<text><![CDATA[FECHA DE SOLICITUD]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="1051" y="1" width="76" height="18" forecolor="#000000" uuid="d7bee8d8-f967-4e97-a923-128fe985798f"/>
+				<textElement>
+					<font fontName="GosmickSans" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ESTADO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="223" y="0" width="80" height="18" forecolor="#000000" uuid="24846ed8-0a71-4315-87e1-fc62e1f82f64"/>
+				<textElement>
+					<font fontName="GosmickSans" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CANTIDAD]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="893" y="0" width="130" height="18" forecolor="#000000" uuid="6dbaa4b8-f398-4cd0-9d03-9d8ccc6347fe"/>
+				<textElement>
+					<font fontName="GosmickSans" isBold="true"/>
+				</textElement>
+				<text><![CDATA[FECHA DE ENTREGA]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="18" splitType="Stretch">
+			<frame>
+				<reportElement style="Row" mode="Opaque" x="14" y="0" width="1136" height="18" uuid="43b030bf-a2de-47cc-bc4e-11ef999ab0a3"/>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" positionType="Float" x="41" y="0" width="20" height="18" uuid="88d3fdd0-702d-4f93-8527-3670d3ee12ce"/>
+					<textElement>
+						<font fontName="GosmickSans" size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{pedidoproducto_idPedido}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" positionType="Float" x="121" y="0" width="72" height="18" uuid="f0e378d2-b083-4ad6-9315-5aed2e684cdc"/>
+					<textElement>
+						<font fontName="GosmickSans" size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{productos_nombreProducto}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" positionType="Float" x="308" y="0" width="72" height="18" uuid="0714c366-d55b-463c-89b5-bff6592b7c7c"/>
+					<textElement>
+						<font fontName="GosmickSans" size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{pedidoproducto_unidad}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" positionType="Float" x="426" y="0" width="62" height="18" uuid="9d0f625e-669a-472e-8b23-f6e0c1fee764"/>
+					<textElement>
+						<font fontName="GosmickSans" size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{pedidoproducto_clasificacion}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" positionType="Float" x="536" y="0" width="44" height="18" uuid="f0517605-7da8-4fd7-a459-24ed0805d206"/>
+					<textElement>
+						<font fontName="GosmickSans" size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{pedidoproducto_descuento}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" positionType="Float" x="1034" y="0" width="72" height="18" uuid="b343bf68-e6b3-4624-bcc6-2d115cedc67b"/>
+					<textElement>
+						<font fontName="GosmickSans" size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{pedido_estado}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" positionType="Float" x="617" y="0" width="57" height="18" uuid="1039ef1e-9cc0-4694-b7b5-de38d8f282cb"/>
+					<textElement>
+						<font fontName="GosmickSans" size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{pedidoproducto_precioTotal}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" positionType="Float" x="885" y="0" width="119" height="18" uuid="ebc3ba2e-4915-4a4d-9d84-b2e87cb33ff6"/>
+					<textElement>
+						<font fontName="GosmickSans" size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{pedido_fechaEntrega}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" positionType="Float" x="727" y="0" width="118" height="18" uuid="938b3137-c0e0-41c1-a0aa-52c52b8fc959"/>
+					<textElement>
+						<font fontName="GosmickSans" size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{pedido_fechaDeSolicitud}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" positionType="Float" x="232" y="0" width="48" height="18" uuid="82f9253a-f06d-487d-84b7-93dcb7be1a63"/>
+					<textElement>
+						<font fontName="GosmickSans" size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{pedidoproducto_cantidad}]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="14" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="3" width="555" height="1" uuid="903b4607-e7c0-49ce-862e-80adfea9546c"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="25" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="0" y="0" width="1150" height="25" forecolor="#D0B48E" backcolor="#3FC929" uuid="8ad24a82-fbd8-40fa-9966-51af453f5665"/>
+				<textField evaluationTime="Report">
+					<reportElement style="Column header" x="1110" y="1" width="40" height="20" forecolor="#FFFFFF" uuid="58ec6ef6-309e-4052-9726-c08001c9c07c"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="GosmickSans" size="14" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Column header" x="991" y="0" width="119" height="20" forecolor="#FFFFFF" uuid="b0758683-7584-4305-bd9c-8a1f8c09e517"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="GosmickSans" size="14" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+				</textField>
+				<textField pattern="EEEEE dd MMMMM yyyy">
+					<reportElement style="Column header" x="29" y="1" width="197" height="20" forecolor="#FFFFFF" uuid="3130362c-a942-4103-a3ac-764d10214ff3"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="GosmickSans " size="14" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

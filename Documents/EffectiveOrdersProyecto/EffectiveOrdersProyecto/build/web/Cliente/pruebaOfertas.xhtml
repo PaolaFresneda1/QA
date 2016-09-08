@@ -1,0 +1,128 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <body>
+
+        <ui:composition template="plantillaCliente.xhtml">
+
+            <ui:define name="links">
+                links
+            </ui:define>
+
+            <ui:define name="tituloPag">
+                <title>Ofertas | Effective Orders</title>
+            </ui:define>
+
+            <ui:define name="menu">
+                <ul class="side-menu side-menu-green">
+                    <li>
+                        <a href="index.xhtml">
+                            <span class="badge pull-right">15</span>
+                            <i class="icon-home"></i> Inicio
+                        </a>
+                    </li>
+                </ul>
+                <div class="relative-w">
+                    <ul class="side-menu side-menu-green">
+                        <li>
+                            <a href="solicitarPedido.xhtml">
+                                <i class="icon-shopping-cart"></i> Solicitar pedidos
+                            </a>
+                        </li>
+                        <li class="current">
+                            <a class="current" href="ofertas.xhtml">
+                                <span class="badge pull-right">13</span>
+                                <i class="icon-usd"></i> Ofertas
+                            </a>
+                        </li>
+                        <li>
+                            <a href="reportes.xhtml">
+                                <span class="badge pull-right">3</span>
+                                <i class="icon-check"></i> Reportes
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="icon-file-text"></i> Información adicional
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </ui:define>
+
+            <ui:define name="nombrePagina">
+                <h1><i class="icon-usd"></i> Ofertas</h1>
+            </ui:define>
+
+            <ui:define name="migasPan">
+                <li><a href="index.xhtml">Inicio</a></li>
+                <li><a href="solicitarPedido.xhtml">Solicitar pedidos</a></li>
+                <li class="active">Ofertas</li>
+            </ui:define>
+
+            <ui:define name="contenido">
+                <legend class="legend">Ofertas <div id="ayuda" class="center"><div class="tip" data-tip="Aquí encontrará los descuentos actuales en nuestros productos, puede solicitar su pedido y beneficiarse de estos."><i class=" icon-question-sign"></i></div></div></legend>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <!--PRIMERA OFERTA-->
+                        <c:forEach var="ofertas" items="#{controladorOfertas.listarOfertas()}">
+                            <div class="panel panel-success">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title"><b>¡OFERTA #{ofertas.descuento}% DE DESCUENTO! </b>
+                                    </h3>
+                                </div>
+                                <div class="panel-body" >
+                                    <c:if test="#{ofertas.codigoProducto.nombreProducto.equalsIgnoreCase('Pitaya')}">
+                                        <div id="pitaya">
+                                            <img class="img-responsive" src="assets/images/ofertas/pitaya.png"></img>
+                                        </div>
+                                    </c:if>
+
+                                    <c:if test="#{ofertas.codigoProducto.nombreProducto.equalsIgnoreCase('Guanabana')}">
+                                        <div id="guanabana">
+                                            <img class="img-responsive" src="assets/images/ofertas/guanabana.png"></img>
+                                        </div>
+                                    </c:if>
+
+                                    <c:if test="#{ofertas.codigoProducto.nombreProducto.equalsIgnoreCase('Aguacate')}">
+                                        <div id="aguacate">
+                                            <img class="img-responsive" src="assets/images/ofertas/aguacate.png"></img>
+                                        </div>
+                                    </c:if>
+
+                                    <div id="texto">
+                                        <br></br>Aprovecha esta promoción. Solicita tu pedido ahora.<br></br><br></br>
+
+                                         <button type="button" class="btn btn-default btn-lg btn-block" onClick="location.href = 'solicitarPedidoDescuento.xhtml'">
+                                                        <span class="icon-shopping-cart"></span> Solicitar</button>
+                                       
+                                    </div>
+                                </div>
+
+                                <div id="fechas" class="panel-heading">
+                                    <h3 class="panel-title">
+                                        <i class="fa fa-calendar-check-o"></i> Fecha inicio: #{controladorOfertas.cambiarFechaFormato(ofertas.fechaInicio)} <br></br><br></br><i class="fa fa-calendar-times-o"></i> Fecha limite: #{controladorOfertas.cambiarFechaFormato(ofertas.fechaFin)} <br></br>
+                                    </h3>
+                                </div>
+
+                            </div>
+                             </c:forEach>
+                    </div>
+                </div><!-- /.col-sm-4 -->
+
+
+
+            </ui:define>
+
+            <ui:define name="scripts">
+                <script src="../resources/js/bootstrap.js" type="text/javascript"></script>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

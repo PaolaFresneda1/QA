@@ -1,0 +1,94 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <body>
+
+        <ui:composition template="./plantillaUsuario.xhtml">
+
+            <ui:define name="tituloPag">
+                <title>Registro Proveedor | EffectiveOrders</title>
+            </ui:define>
+            <ui:define name="migasPan">
+                <li><a href="index.xhtml">Inicio</a></li>
+                <li><a href="gestionarCliente.xhtml">Registro Cliente</a></li>
+                <li class="active">Registro Proveedor</li>
+            </ui:define>
+            <ui:define name="menuRegistroProveedor">
+
+                <li class='current'>
+                    <h:link outcome="gestionarProveedor"><span class="badge pull-right"></span>
+                        <i class="fa fa-truck"></i>Registro proveedor</h:link>
+                </li>
+
+            </ui:define>
+
+            <ui:define name="nombrePagina">
+                <h1><i class="fa fa-file-text"></i>Registro Proveedor</h1>
+            </ui:define>
+
+            <ui:define name="contenido">
+                <legend>Registro proveedor</legend>
+
+                <h:form class="form-horizontal" onsubmit="mensaje()" >
+
+
+                    <!-- Documento-->
+                    <div class="form-group">
+                        <div class="col-md-4">
+                            <input id="documentoUsuario" name="documentoUsuario" type="hidden" placeholder="" maxlength="15" class="form-control input-md" value="#{controladorUsuario.objUsuarioLogin.idUsuario}"></input>
+                        </div>
+                    </div>
+
+                    <!-- nombre-->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="nombreUsuario" >Nombre:</label> 
+                        <div class="col-md-4">
+                            <input style="text-transform: capitalize" id="nombreUsuario" name="nombreUsuario" type="text" placeholder="" maxlength="15" class="form-control input-md" value="#{controladorUsuario.objUsuarioLogin.nombre}" tabindex="1"  disabled="true" required="true"></input>
+                        </div>
+                    </div>
+
+                    <!-- Apellido-->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="apellidoUsuario">Apellido:</label> 
+                        <div class="col-md-4">
+                            <input style="text-transform: capitalize" id="apellidoUsuario" name="apellidoUsuario" type="text" maxlength="30" placeholder="" class="form-control input-md" value="#{controladorUsuario.objUsuarioLogin.apellido}" disabled="true" tabindex="2" required="true"></input>
+                        </div>
+                    </div>
+
+                    <!-- Empresa-->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="empresa">Empresa:</label> 
+                        <div class="col-md-4">
+                            <input style="text-transform: capitalize" id="empresa" name="empresa" type="text" maxlength="30" placeholder="" class="form-control input-md" tabindex="2" required="true"></input>
+                        </div>
+                    </div>
+                    <!-- Nit-->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="nit">Nit:</label> 
+                        <div class="col-md-4">
+                            <input id="nit" name="nit" type="number" maxlength="30" placeholder="" class="form-control input-md"  tabindex="2" required="true"></input>
+                        </div>
+                    </div>
+
+
+
+
+                    <div id="botonContactenos">
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="boton"></label>
+                            <div class="col-md-4">
+                                <h:commandButton id="boton" value="Registrar"  class="btn btn-submit" action="#{controladorProveedor.registrarProveedor()}" disabled="#{controladorUsuario.objUsuarioLogin.proveedor.cedulaProveedor==controladorUsuario.objUsuarioLogin.idUsuario ?true:''}"></h:commandButton>
+                            </div>
+                        </div>
+                    </div>
+
+                </h:form>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

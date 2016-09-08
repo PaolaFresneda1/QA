@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+
+        <title>TODO supply a title</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css"></link>
+        <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    </head>
+    <body>
+
+
+        <input type="submit" id="pru2"  value="bot1" onclick="myFunction()" />
+        <div id="ocul" style="display: block">
+            <input type="submit" id="pru" value="bot2"  onclick="myFunction2()" />
+        </div>
+
+        <input type="text" placeholder="hora" id="hora"/>
+        <input type="text" placeholder="fecha" id="fecha"/>
+        <input type="text" placeholder="min" id="min"/>
+        <script type="text/javascript">
+
+
+
+            $(document).ready(function () {
+                debugger;
+
+                myFunction2()//funcion que valida la hora
+
+            });//funcion que se activa cada vez que se carga la pagina 
+            
+            
+            $(function () {
+                $("#fecha").datepicker();
+            });
+
+            function myFunction() {
+                debugger;
+                setTimeout(function () {
+
+                    alert("Hello");
+                    document.getElementById("pru").click();//activa el evento para guardar todo 
+                }, 5000);
+
+            }
+        document.getElementById("pru").value = n // colocar datos en inputs 
+          
+    
+    function myFunction2() {//funcion a mostrar 
+        
+                debugger;
+
+                var horav = document.getElementById("hora").value;
+                var minv = document.getElementById("min").value;
+                var dia = document.getElementById("fecha").value;
+                var d = new Date();
+                var n = d.getHours();
+                var f = d.getDate();
+                var m = d.getDay() + ' ' + d.getMonth() + '' + d.getFullYear();
+                var a = d.getFullYear();
+
+                var min = d.getMinutes();
+
+                var totalvalid = parseInt(horav) + 2;
+                var horaactual = d.getHours();
+                var minactial = d.getMinutes();
+                var diavalid = d.getDay() + ' ' + d.getMonth() + '' + d.getFullYear();
+                if (dia == diavalid) {
+                    if (horaactual >= totalvalid) {
+                        if (minactial >= minv) {
+                            document.getElementById("pru").disabled = true;
+                            alert("button disabled");
+                        }
+
+                    }
+                }
+            }
+
+
+        </script>
+    </body>
+
+
+</html>

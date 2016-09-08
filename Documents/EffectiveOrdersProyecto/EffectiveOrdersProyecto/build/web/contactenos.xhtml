@@ -1,0 +1,121 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <body>
+
+        <ui:composition template="./PlantillaEffectiveOrders.xhtml">
+
+            <ui:define name="nombre">
+                Contáctenos | Effective Orders
+            </ui:define>
+
+            <ui:define name="content">
+                <div class="container">
+                    <div class="row">
+                        <div class="box">
+
+                            <div id="contacto">
+                                <div class="col-md-4">
+                                    <img class="img-responsive" src="img/contacto.png" alt=""/>
+
+                                </div>
+                            </div>
+
+                            <div class="col-md-8">
+                                <!-- Embedded Google Map using an iframe - to select your location find it on Google maps and paste the link as the iframe src. If you want to use the Google Maps API instead then have at it! -->
+                                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1988.373481879626!2d-74.15671027234102!3d4.63916737341734!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e3f9c3ad0015feb%3A0xcf78c618483e9bd1!2sDg.+2b+%2384-11%2C+Bogot%C3%A1%2C+Colombia!5e0!3m2!1ses!2s!4v1434067707956" width="650" height="430" frameborder="0" style="border:0"></iframe>
+                            </div>
+
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="box">
+                            <div id="enunciado">
+                                <div class="col-lg-12">
+
+                                    <h2 class="intro-text text-center">
+                                        <strong>Contáctenos</strong>
+                                    </h2>
+                                    <hr></hr>
+                                </div>
+                            </div>
+                            <div id="informacion">
+                                <p>Su mensaje llegará inmediatamente al gerente.</p>
+                            </div>
+
+
+
+                            <h:form id="formulario" class="form-horizontal" onsubmit="mensaje()" >
+
+                                <!-- nombre-->
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label" for="nombreUsuario" >Nombre:</label> 
+                                    <div class="col-md-4">
+                                        <input id="nombreUsuario" name="nombreUsuario" type="text" placeholder="" maxlength="20" class="form-control input-md" tabindex="1" required="true"/>
+                                    </div>
+                                </div>
+
+                                <!-- Apellido-->
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label" for="apellidoUsuario">Apellido:</label> 
+                                    <div class="col-md-4">
+                                        <input id="apellidoUsuario" name="apellidoUsuario" type="text" maxlength="20" placeholder="" class="form-control input-md"  tabindex="2" required="true"/>
+                                    </div>
+                                </div>
+
+                                <!-- Email-->
+
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label" for="correoUsuario">E-mail:</label> 
+                                    <div class="col-md-4">
+                                        <input id="correoUsuario" name="correoUsuario" type="email" class="form-control"  maxlength="50"  placeholder="usuario@hotmail.com" tabindex="3" required="true"/>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label" for="asuntoContactenos">Asunto:</label>  
+                                    <div class="col-md-4">
+                                        <textarea class="form-control" id="asuntoContactenos"  maxlength="600" name="asuntoContactenos" placeholder="" rows="1" tabindex="4" required="true"/>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label" for="mensajeContactenos">Mensaje:</label>  
+                                    <div class="col-md-4">
+                                        <textarea class="form-control" id="mensajeContactenos" name="mensajeContactenos" placeholder="" rows="6" tabindex="5" required="true"/>
+                                    </div>
+                                </div>
+
+                                <div id="botonContactenos">
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label" for="boton"/>
+                                        <div class="col-md-4">
+                                            <h:commandButton id="boton" value="Contactar" action="#{controladorContactenos.registrarContacto()}"  class="btn btn-submit"></h:commandButton>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </h:form>
+
+                        </div>
+                    </div>
+
+                </div>
+
+
+            </ui:define>
+            <h:outputScript library="js" name="mensaje.js"/>
+            <h:outputScript library="js" name="sweetalert2.js"/>
+            <h:outputScript library="js" name="formularioContactenos.js" />
+           
+        </ui:composition>
+
+    </body>
+</html>

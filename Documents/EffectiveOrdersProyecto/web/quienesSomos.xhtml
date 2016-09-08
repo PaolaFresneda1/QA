@@ -1,0 +1,82 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+
+
+    <h:body>
+        <ui:composition template="./PlantillaEffectiveOrders.xhtml">
+            
+            <ui:define name="nombre" >
+                Quiénes Somos | Effective Orders
+            </ui:define>
+            
+            <ui:define name="quienesSomos">
+                <li><h:link id="botonQuienesSomos" outcome="quienesSomos.xhtml" class="active"><i class="fa fa-truck"></i> ¿Quiénes somos?</h:link></li>
+            </ui:define>
+            
+            <ui:define name="content">
+                <div class="container"> 
+                    <!-- Abre mision--> 
+                    <div class="row">
+                        <div class="box">
+                            <div id="titulo">
+                                <div class="col-lg-12">
+
+                                    <hr></hr>
+                                    <h2 class="intro-text text-center">
+                                        <strong>Misión</strong>
+                                    </h2>
+                                    <hr></hr>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <img class="img-responsive img-border-left" src="RecursosPrincipal/img/mision3.png" alt=""></img>
+                            </div>
+                            <div class="col-md-6">
+                                <div id="texto">
+                                    <p>Ser la mejor opción en el ámbito comercial para obtener productos agrícolas. Además contamos con productos de alta calidad, saludables y traidos de las mejores fincas del país; por lo tanto, podemos ofrecerle al cliente calidad, seguridad y confianza cuando adquiera productos de nuestra empresa.</p>
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+
+                            <!-- Cierra mision--> 
+
+                            <!-- Abre vision-->   
+                            <div class="row">
+                                <div class="box">
+                                    <div id="titulo">
+                                        <div class="col-lg-12">
+
+                                            <hr></hr>
+                                            <h2 class="intro-text text-center">
+                                                <strong>Visión</strong>
+                                            </h2>
+                                            <hr></hr>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div id="texto1">
+                                            <p>Ser en el 2024, una de las empresas más reconocidas y confiables de Colombia como productora y distribuidora de productos agricolas; además, tener cobertura de pedidos nacional e internacionalmente.</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <img class="img-responsive img-border-right" src="RecursosPrincipal/img/vission3.png" alt=""></img>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>           
+                            </div>
+                        </div>
+                        <!-- Cierra vision-->   
+                    </div>
+
+                </div>
+            </ui:define>
+
+        </ui:composition>
+
+    </h:body>
+</html>

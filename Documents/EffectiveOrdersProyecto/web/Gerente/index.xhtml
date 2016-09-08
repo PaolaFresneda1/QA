@@ -1,0 +1,152 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <body>
+
+        <ui:composition template="./plantillaGerente.xhtml">
+
+            <ui:define name="tituloPag">
+                <title>Inicio Gerente| EffectiveOrders</title>
+            </ui:define>
+
+            <ui:define name="menu">
+                <li class="current">
+                    <a  href="index.xhtml">
+                        <span class="badge pull-right"></span>
+                        <i class="fa fa-home"></i><span style="font-size: 14px">Inicio</span>
+                    </a>
+                </li>
+            </ui:define>
+            <ui:define name="nombrePagina">
+                <h1 style="font-size: 23px;"><i class="fa fa-home"></i> Inicio</h1>
+
+            </ui:define>
+
+            <ui:define name="migasPan">
+                <li class="active">Inicio</li>
+            </ui:define>
+
+            <ui:define name="contenido">
+                <div class="row">
+                    <div class="col-lg-2 col-sm-6">
+                        <div class="circle-tile">
+                            <a href="#">
+                                <div id="verde" class="circle-tile-heading greenDark">
+                                    <i class="fa fa-users fa-fw fa-3x"></i>
+                                </div>
+                            </a>
+                            <div class="circle-tile-content green2">
+                                <div class="circle-tile-description text-faded">
+                                    Usuarios
+                                </div>
+                                <div class="circle-tile-number text-faded">
+                                    #{controladorUsuario.contarUsuarios()}
+                                    <span id="sparklineA"></span>
+                                </div>
+                                <a id="verde" href="#" class="circle-tile-footer greenDark">Ver más <i class="fa fa-chevron-circle-right" style="font-size:14px;"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-2 col-sm-6">
+                        <div class="circle-tile">
+                            <a href="#">
+                                <div id="naranja" class="circle-tile-heading orangeDark">
+                                    <i class="fa fa-user fa-fw fa-3x"></i>
+                                </div>
+                            </a>
+                            <div class="circle-tile-content orange">
+                                <div class="circle-tile-description text-faded">
+                                    Clientes
+                                </div>
+                                <div class="circle-tile-number text-faded">
+                                    #{controladorCliente.contarClientes()}
+                                </div>
+                                <a href="#" id="naranja" class="circle-tile-footer orangeDark">Ver más <i class="fa fa-chevron-circle-right" style="font-size:14px;"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-sm-6">
+                        <div class="circle-tile">
+                            <a href="#">
+                                <div id="gris" class="circle-tile-heading grayDark">
+                                    <i class="fa fa-truck fa-fw fa-3x"></i>
+                                </div>
+                            </a>
+                            <div class="circle-tile-content gray">
+                                <div class="circle-tile-description text-faded">
+                                    Proveedores
+                                </div>
+                                <div class="circle-tile-number text-faded">
+                                     #{controladorProveedor.contarProveedor()}
+                                </div>
+                                <a id="gris" href="#" class="circle-tile-footer grayDark">Ver más <i class="fa fa-chevron-circle-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-sm-6">
+                        <div class="circle-tile">
+                            <a href="#">
+                                <div id="azul" class="circle-tile-heading blueDark">
+                                    <i class="fa fa-shopping-cart fa-fw fa-3x"></i>
+                                </div>
+                            </a>
+                            <div class="circle-tile-content blue">
+                                <div class="circle-tile-description text-faded">
+                                    Pedidos
+                                </div>
+                                <div class="circle-tile-number text-faded">
+                                    #{controladorPedido.contarPedidos()}
+                                    <span id="sparklineB"></span>
+                                </div>
+                                <a id="azul" href="#" class="circle-tile-footer blueDark">Ver más <i class="fa fa-chevron-circle-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-sm-6">
+                        <div class="circle-tile">
+                            <a href="#">
+                                <div id="rojo" class="circle-tile-heading redDrack">
+                                    <i class="fa fa-usd fa-fw fa-3x"></i>
+                                </div>
+                            </a>
+                            <div class="circle-tile-content red">
+                                <div class="circle-tile-description text-faded">
+                                    Ofertas
+                                </div>
+                                <div class="circle-tile-number text-faded">
+                                    #{controladorOferta.contarOfertas()}
+                                    <span id="sparklineC"></span>
+                                </div>
+                                <a id="rojo" href="#" class="circle-tile-footer redDrack">Ver más <i class="fa fa-chevron-circle-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-sm-6">
+                        <div class="circle-tile">
+                            <a href="#">
+                                <div id="purpura" class="circle-tile-heading purpleDark">
+                                    <i class="fa fa-envelope fa-fw fa-3x"></i>
+                                </div>
+                            </a>
+                            <div class="circle-tile-content purple">
+                                <div class="circle-tile-description text-faded">
+                                    E-mail
+                                </div>
+                                <div class="circle-tile-number text-faded">
+                                    #{controladorContactenos.contarEmails()}
+                                    <span id="sparklineD"></span>
+                                </div>
+                                <a id="purpura" href="#" class="circle-tile-footer purpleDark">Ver más <i class="fa fa-chevron-circle-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

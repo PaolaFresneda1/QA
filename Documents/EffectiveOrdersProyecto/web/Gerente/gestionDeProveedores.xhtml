@@ -1,0 +1,243 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <body>
+
+        <ui:composition template="./plantillaGerente.xhtml">
+
+            <ui:define name="links">
+                <link rel='stylesheet' href='../RecursosModulos/css/datatables/bootstrap.datatables.css'></link>
+                <link rel='stylesheet' href='../RecursosModulos/css/datatables/jquery.dataTables.css'></link>          
+            </ui:define>
+            <ui:define name="tituloPag">
+                <title>Gestión de proveedores|EffectiveOrders</title>
+            </ui:define>
+
+            <ui:define name="menuGestionarUsuario">
+                <li class='current'>
+                    <a href="#" class="current is-dropdown-menu">
+
+                        <i class="fa fa-sort-amount-desc"></i><span style="font-size: 14px;">Gestión de usuarios</span>
+                    </a>
+                    <ul style="display: none;">
+                        <li>
+                            <a href="gestionDeUsuarios.xhtml">
+                                <span class="badge pull-right">15</span>
+                                <i class="fa fa-user"></i><span style="font-size: 14px;">
+                                    Usuarios</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="gestionDeClientes.xhtml">
+                                <span class="badge pull-right">15</span>
+                                <i class="fa fa-usd"></i><span style="font-size: 14px;">
+                                    Clientes</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="gestionDeProveedores.xhtml">
+                                <span class="badge pull-right">15</span>
+                                <i class="fa fa-truck"></i><span style="font-size: 14px;">
+                                    Proveedores</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ui:define>
+
+            <ui:define name="nombrePagina">
+                <h1 style="font-size: 23px;"><i class="fa fa-truck"></i> Gestión de Usuarios | Proveedores</h1>
+            </ui:define>
+
+            <ui:define name="migasPan">
+                <li><a href="index.xhtml">Inicio</a></li>   
+                <li><a href="gestionDeUsuarios.xhtml">Gestion de Usuarios</a></li> 
+                <li class="active">Proveedores</li>
+            </ui:define>
+
+            <ui:define name="contenido">
+                <div class="widget">
+                    <div class="widget-content-white glossed "  id="htmlexportPDF">
+                        <div class="padded responsive-utilities-test table-responsive" >
+                            <table id="testTable" class="table table-striped table-bordered table-hover datatable" >
+                                <thead>
+                                    <tr>
+                                        <th>Documento</th>
+                                        <th>Nombre</th>
+                                        <th>Apellido</th>
+                                        <th>Ciudad</th>
+                                        <th>Telefono</th>
+                                        <th>Estado</th>
+                                        <th>Opciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <c:forEach var="objProveedor" items="#{controladorProveedor.listarProveedores()}">
+
+                                        <tr>
+                                            <td>#{objProveedor.cedulaProveedor}</td>
+                                            <td>#{objProveedor.usuario.nombre}</td>
+                                            <td>#{objProveedor.usuario.apellido}</td>
+                                            <td>#{objProveedor.usuario.idCiudad.nombreCiudad}</td>
+                                            <td>#{objProveedor.usuario.telefono}</td>
+                                            <td>
+                                                <c:if test="#{objProveedor.estado.equalsIgnoreCase('Aceptado')}">
+                                                    <span class="label label-success">Aceptado</span>
+                                                </c:if>
+                                                <c:if test="#{objProveedor.estado.equalsIgnoreCase('Por aceptar')}">
+                                                    <span class="label label-warning">Por aceptar</span>
+                                                </c:if>
+                                                <c:if test="#{objProveedor.estado.equalsIgnoreCase('Cancelado')}">
+                                                    <span class="label label-danger">Cancelado</span>
+                                                </c:if>
+                                            </td>
+                                            <td>
+                                                <button href="#" class="btn  btn-xs" data-toggle="modal" title="Ver todo" data-target="#verTodo#{objProveedor.usuario.idUsuario}"><span class="fa fa-search"></span></button>
+                                                <c:if test="#{objProveedor.estado.equalsIgnoreCase('Aceptado')}">
+                                                    <button href="#" class="btn  btn-xs" data-toggle="modal" title="Cancelar" data-target="#cancelar#{objProveedor.usuario.idUsuario}"><span class="fa fa-times"></span></button>
+                                                </c:if>
+                                                <c:if test="#{objProveedor.estado.equalsIgnoreCase('Cancelado')}">
+                                                    <button href="#" class="btn  btn-xs" data-toggle="modal" title="Aceptar" data-target="#aceptar#{objProveedor.usuario.idUsuario}"><span class="fa fa-check"></span></button>
+                                                </c:if>
+                                                <c:if test="#{objProveedor.estado.equalsIgnoreCase('Por aceptar')}">
+                                                    <button href="#" class="btn  btn-xs" data-toggle="modal" title="Aceptar" data-target="#aceptar#{objProveedor.usuario.idUsuario}"><span class="fa fa-check"></span></button>
+                                                </c:if>
+                                            </td>
+
+                                            <!-- MODAL ACEPTAR -->
+                                            <div class="modal fade" id="aceptar#{objProveedor.usuario.idUsuario}" role="dialog" style="width: 1000px; margin-left: 320px; margin-top: 150px;">
+                                                <div class="modal-content" style="margin-right: 200px;">
+                                                    <!-- Modal content-->
+                                                    <div class="modal-content">
+                                                        <div class="modal-header" >
+                                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                            <h4 class="modal-title" id="title">¿ Aceptar proveedor: &nbsp; #{objProveedor.usuario.nombre}&nbsp;#{objProveedor.usuario.apellido} ?</h4>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <div id="cancelar" style="margin-left:300px; width:150px; height: 150px;">
+                                                                <img src="assets/images/exclamation.png"></img>
+                                                            </div>
+                                                            <h6 style="font-weight: bold;">¿Está seguro de aceptar al proveedor?</h6>
+                                                            <br></br>
+                                                            <p>Recuerde que una vez el proveedor sea aceptado podrá ingresar al módulo proveedor.</p>
+                                                            <br></br>
+                                                            <h:form>
+                                                                <input type="text" id="idUsuario" name="idUsuario" class="hidden" value="#{objProveedor.usuario.idUsuario}"></input>
+                                                                <div id="botones" style="margin-left: 300px">
+                                                                    <h:commandButton class="btn btn-danger" value="Aceptar" action="#{controladorProveedor.aceptarProovedor(objProveedor)}" style="margin-right: 15px;" ></h:commandButton>
+                                                                    <h:commandButton class="btn btn-info" value="Salir"></h:commandButton>
+                                                                </div>
+                                                            </h:form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- FIN MODAL ACEPTAR-->
+
+                                            <!-- MODAL CANCELAR -->
+                                            <div class="modal fade" id="cancelar#{objProveedor.usuario.idUsuario}" role="dialog" style="width: 1000px; margin-left: 320px; margin-top: 150px;">
+                                                <div class="modal-content" style="margin-left: 200px;">
+                                                    <!-- Modal content-->
+                                                    <div class="modal-content">
+                                                        <div class="modal-header" >
+                                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                            <h4 class="modal-title" id="title">¿ Cancelar proveedor: &nbsp; #{objProveedor.usuario.nombre}&nbsp;#{objProveedor.usuario.apellido} ?</h4>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <div id="cancelar" style="margin-left:300px; width:150px; height: 150px;">
+                                                                <img src="assets/images/exclamation.png"></img>
+                                                            </div>
+                                                            <h6 style="font-weight: bold;">¿Está seguro de cancelar al proveedor?</h6>
+                                                            <br></br>
+                                                            <p>Recuerde que una vez el proveedor sea cancelado no podrá acceder al módulo proveedor.</p>
+                                                            <br></br>
+                                                            <h:form>
+                                                                <input type="text" id="idUsuario" name="idUsuario" class="hidden" value="#{objProveedor.usuario.idUsuario}"></input>
+                                                                <div id="botones" style="margin-left: 300px">
+                                                                    <h:commandButton class="btn btn-danger" value="Cancelar" action="#{controladorProveedor.cancelarProveedor(objProveedor)}" style="margin-right: 15px;" ></h:commandButton>
+                                                                    <h:commandButton class="btn btn-info" value="Salir"></h:commandButton>
+                                                                </div>
+                                                            </h:form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- FIN MODAL CANCELAR-->
+
+                                        </tr> 
+                                    </c:forEach>
+                                </tbody>
+                            </table>
+                            <!-- MODAL VER TODO-->
+                            <c:forEach var="proveedor" items="#{controladorProveedor.listarProveedores()}">
+                                <div class="modal fade" id="verTodo#{proveedor.usuario.idUsuario}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                    <div class="modal-content" role="document" id="verTodo">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                <h4 class="modal-title" id="myModalLabel">Proveedor:&nbsp;#{proveedor.usuario.nombre}&nbsp;#{proveedor.usuario.apellido}</h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="table-hover">
+                                                    <table class="table table-bordered table-responsive" align="center">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Documento</th>
+                                                                <th>Nombre</th>
+                                                                <th>Apellido</th>
+                                                                <th>Ciudad</th>
+                                                                <th>Telefono</th>
+                                                                <th>Correo</th>
+                                                                <th>Direccion</th>
+                                                                <th>Genero</th>
+                                                                <th>Empresa</th>
+                                                                <th>Nit</th>
+                                                                <th>Estado</th>
+                                                            </tr>
+
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td>#{proveedor.cedulaProveedor}</td>
+                                                                <td>#{proveedor.usuario.nombre}</td>
+                                                                <td>#{proveedor.usuario.apellido}</td>
+                                                                <td>#{proveedor.usuario.idCiudad.nombreCiudad}</td>
+                                                                <td>#{proveedor.usuario.telefono}</td>
+                                                                <td>#{proveedor.usuario.correo}</td>                                                                
+                                                                <td>#{proveedor.usuario.direccion}</td>
+                                                                <td>#{proveedor.usuario.genero}</td>
+                                                                <td>#{proveedor.empresa}</td>
+                                                                <td>#{proveedor.nit}</td>
+                                                                <td>#{proveedor.estado}</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- FIN MODAL VER TODO-->
+                            </c:forEach>
+                        </div>
+
+                        <input type="button" class="botonimagenexcel" id="excel"  onclick="tableToExcel('testTable')"></input>
+                        <input type="button" class="botonimagenpdf" id="pdf"  onclick="htmltopdf()"></input>
+                    </div>
+                    <p style="float: right; font-family: 'neoteric'; font-size: 20px; letter-spacing: 1px; font-weight: bold; margin-top: 10px;">Exportar tabla a:</p>
+                </div>
+
+            </ui:define>
+            <ui:define name="scripts">
+                <script src='../RecursosModulos/js/tables/dataTables.bootstrap.min'></script>
+                <script src='../RecursosModulos/js/tables/prueba.js'></script>
+                <script src='../RecursosModulos/js/tables/table.js'></script>
+            </ui:define>
+        </ui:composition>
+
+    </body>
+</html>

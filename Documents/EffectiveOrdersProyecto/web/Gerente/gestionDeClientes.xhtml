@@ -1,0 +1,239 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <body>
+
+        <ui:composition template="./plantillaGerente.xhtml">
+
+            <ui:define name="links">
+                <link rel='stylesheet' href='../RecursosModulos/css/datatables/bootstrap.datatables.css'></link>
+                <link rel='stylesheet' href='../RecursosModulos/css/datatables/jquery.dataTables.css'></link>          
+            </ui:define>
+            <ui:define name="tituloPag">
+                <title>Gestión de clientes|EffectiveOrders</title>
+            </ui:define>
+
+            <ui:define name="menuGestionarUsuario">
+                <li class='current'>
+                    <a href="#" class="current is-dropdown-menu">
+
+                        <i class="fa fa-sort-amount-desc"></i><span style="font-size: 14px;">Gestión de usuarios</span>
+                    </a>
+                    <ul style="display: none;">
+                        <li>
+                            <a href="gestionDeUsuarios.xhtml">
+                                <span class="badge pull-right">15</span>
+                                <i class="fa fa-user"></i><span style="font-size: 14px;">
+                                    Usuarios</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="gestionDeClientes.xhtml">
+                                <span class="badge pull-right">15</span>
+                                <i class="fa fa-usd"></i><span style="font-size: 14px;">
+                                    Clientes</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="gestionDeProveedores.xhtml">
+                                <span class="badge pull-right">15</span>
+                                <i class="fa fa-truck"></i><span style="font-size: 14px;">
+                                    Proveedores</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ui:define>
+
+            <ui:define name="nombrePagina">
+                <h1 style="font-size: 23px;"><i class="fa fa-user"></i> Gestión de Usuarios | Clientes</h1>
+            </ui:define>
+
+            <ui:define name="migasPan">
+                <li><a href="index.xhtml">Inicio</a></li>   
+                <li><a href="gestionDeUsuarios.xhtml">Gestion de Usuarios</a></li> 
+                <li class="active">Clientes</li>
+            </ui:define>
+
+            <ui:define name="contenido">
+                <div class="widget">
+                    <div class="widget-content-white glossed "  id="htmlexportPDF">
+                        <div class="padded responsive-utilities-test table-responsive" >
+                            <table id="testTable" class="table table-striped table-bordered table-hover datatable" >
+                                <thead>
+                                    <tr>
+                                        <th>Documento</th>
+                                        <th>Nombre</th>
+                                        <th>Apellido</th>
+                                        <th>Ciudad</th>
+                                        <th>Telefono</th>
+                                        <th>Estado</th>
+                                        <th>Opciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <c:forEach var="objCliente" items="#{controladorCliente.listarClientes()}">
+
+
+                                        <tr>
+                                            <td>#{objCliente.cedulaCliente}</td>
+                                            <td>#{objCliente.usuario.nombre}</td>
+                                            <td>#{objCliente.usuario.apellido}</td>
+                                            <td>#{objCliente.usuario.idCiudad.nombreCiudad}</td>
+                                            <td>#{objCliente.usuario.telefono}</td>
+                                            <td>
+                                                <c:if test="#{objCliente.estado.equalsIgnoreCase('Aceptado')}">
+                                                    <span class="label label-success">Aceptado</span>
+                                                </c:if>
+                                                <c:if test="#{objCliente.estado.equalsIgnoreCase('Por aceptar')}">
+                                                    <span class="label label-warning">Por aceptar</span>
+                                                </c:if>
+                                                <c:if test="#{objCliente.estado.equalsIgnoreCase('Cancelado')}">
+                                                    <span class="label label-danger">Cancelado</span>
+                                                </c:if>
+                                            </td>
+                                            <td>
+                                                <button href="#" class="btn  btn-xs" data-toggle="modal" title="Ver todo" data-target="#verTodo#{objCliente.usuario.idUsuario}"><span class="fa fa-search"></span></button>
+                                                <c:if test="#{objCliente.estado.equalsIgnoreCase('Aceptado')}">
+                                                    <button href="#" class="btn  btn-xs" data-toggle="modal" title="Cancelar" data-target="#cancelar#{objCliente.usuario.idUsuario}"><span class="fa fa-times"></span></button>
+                                                </c:if>
+                                                <c:if test="#{objCliente.estado.equalsIgnoreCase('Cancelado')}">
+                                                    <button href="#" class="btn  btn-xs" data-toggle="modal" title="Aceptar" data-target="#aceptar#{objCliente.usuario.idUsuario}"><span class="fa fa-check"></span></button>
+                                                </c:if>
+                                                <c:if test="#{objCliente.estado.equalsIgnoreCase('Por aceptar')}">
+                                                    <button href="#" class="btn  btn-xs" data-toggle="modal" title="Aceptar" data-target="#aceptar#{objCliente.usuario.idUsuario}"><span class="fa fa-check"></span></button>
+                                                </c:if>
+                                            </td>
+
+                                            <!-- MODAL ACEPTAR -->
+                                            <div class="modal fade" id="aceptar" role="dialog">
+                                                <div class="modal-content" role="dialog" style="width: 750px;margin-left: 400px;margin-top: 50px;">
+                                                    <!-- Modal content-->
+                                                    <div class="modal-content">
+                                                        <div class="modal-body">
+                                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                            <h4 class="modal-title" id="title">¿ Aceptar cliente: &nbsp; #{objCliente.usuario.nombre}&nbsp;#{objCliente.usuario.apellido} ?</h4>
+                                                            <br></br>
+                                                            <div id="cancelar" style="margin-left:300px; width:150px; height: 150px;">
+                                                                <img src="../RecursosModulos/images/exclamation.png"></img>
+                                                            </div>
+                                                            <h6 style="font-weight: bold;">¿Está seguro de aceptar al cliente?</h6>
+                                                            <br></br>
+                                                            <p>Recuerde que una vez el cliente sea aceptado podrá ingresar al módulo cliente.</p>
+                                                            <br></br>
+                                                            <h:form>
+                                                                <input type="text" id="idUsuario" name="idUsuario" class="hidden" value="#{objCliente.usuario.idUsuario}"></input>
+                                                                <div id="botones" style="margin-left: 300px">
+                                                                    <h:commandButton class="btn btn-danger" value="Aceptar" action="#{controladorCliente.aceptarCliente(objCliente)}" style="margin-right: 15px;" ></h:commandButton>
+                                                                    <h:commandButton class="btn btn-info" value="Salir"></h:commandButton>
+                                                                </div>
+                                                            </h:form>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                            <!-- FIN MODAL ACEPTAR-->
+
+                                            <!-- MODAL CANCELAR -->
+                                            <div class="modal fade" id="cancelar" role="dialog">
+                                                <div class="modal-content" role="dialog" style="width: 750px;margin-left: 400px;margin-top: 50px;">
+                                                    <!-- Modal content-->
+                                                    <div class="modal-content">
+                                                        <div class="modal-body">
+                                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                            <h4 class="modal-title" id="title">¿ Cancelar cliente: &nbsp; #{objCliente.usuario.nombre}&nbsp;#{objCliente.usuario.apellido} ?</h4>
+                                                            <br></br>
+                                                            <div id="cancelar" style="margin-left:300px; width:150px; height: 150px;">
+                                                                <img src="../RecursosModulos/images/exclamation.png"></img>
+                                                            </div>
+                                                            <h6 style="font-weight: bold;">¿Está seguro de cancelar al cliente?</h6>
+                                                            <br></br>
+                                                            <p>Recuerde que una vez el cliente sea cancelado no podrá acceder al módulo cliente.</p>
+                                                            <br></br>
+                                                            <h:form>
+                                                                <input type="text" id="idUsuario" name="idUsuario" class="hidden" value="#{objCliente.usuario.idUsuario}"></input>
+                                                                <div id="botones" style="margin-left: 300px">
+                                                                    <h:commandButton class="btn btn-danger" value="Cancelar" action="#{controladorCliente.cancelarCliente(objCliente, objCliente.usuario)}" style="margin-right: 15px;" ></h:commandButton>
+                                                                    <h:commandButton class="btn btn-info" value="Salir"></h:commandButton>
+                                                                </div>
+                                                            </h:form>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                            <!-- FIN MODAL CANCELAR-->
+
+                                        </tr> 
+                                    </c:forEach>
+                                </tbody>
+                            </table>
+                            <!-- MODAL VER TODO-->
+                            <c:forEach var="cliente" items="#{controladorCliente.listarClientes()}">
+                                <div class="modal fade" id="verTodo#{cliente.usuario.idUsuario}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                    <div class="modal-content" role="document" id="verTodo">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                <h4 class="modal-title" id="myModalLabel">Cliente:&nbsp;#{cliente.usuario.nombre}&nbsp;#{cliente.usuario.apellido}</h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="table-hover">
+                                                    <table class="table table-bordered table-responsive" align="center">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Documento</th>
+                                                                <th>Nombre</th>
+                                                                <th>Apellido</th>
+                                                                <th>Ciudad</th>
+                                                                <th>Telefono</th>
+                                                                <th>Correo</th>
+                                                                <th>Direccion</th>
+                                                                <th>Genero</th>
+                                                                <th>Tipo cliente</th>
+                                                                <th>Estado</th>
+                                                            </tr>
+
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td>#{cliente.cedulaCliente}</td>
+                                                                <td>#{cliente.usuario.nombre}</td>
+                                                                <td>#{cliente.usuario.apellido}</td>
+                                                                <td>#{cliente.usuario.idCiudad.nombreCiudad}</td>
+                                                                <td>#{cliente.usuario.telefono}</td>
+                                                                <td>#{cliente.usuario.correo}</td>                                                                
+                                                                <td>#{cliente.usuario.direccion}</td>
+                                                                <td>#{cliente.usuario.genero}</td>
+                                                                <td>#{cliente.tipoCliente}</td>
+                                                                <td>#{cliente.estado}</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- FIN MODAL VER TODO-->
+                            </c:forEach>
+                            
+                        </div>
+                    </div>
+                    </div>
+                            
+            </ui:define>
+            <ui:define name="scripts">
+                <script src='../RecursosModulos/js/tables/dataTables.bootstrap.min'></script>
+                <script src='../RecursosModulos/js/tables/prueba.js'></script>
+                <script src='../RecursosModulos/js/tables/table.js'></script>
+            </ui:define>
+        </ui:composition>
+
+    </body>
+</html>

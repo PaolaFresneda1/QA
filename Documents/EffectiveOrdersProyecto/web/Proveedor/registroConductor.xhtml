@@ -1,0 +1,294 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition template="./plantillaProveedor.xhtml">
+
+            <ui:define name="links">                              
+                <link href="../RecursosPrincipal/css/formValidation.css" rel="stylesheet" type="text/css"/>
+            </ui:define>
+
+            <ui:define name="tituloPag">
+                <title>Registro conductor | Proveedor</title>
+            </ui:define>
+
+            <ui:define name="nombrePagina">
+                <h1><i class="fa fa-user"></i> Conductor</h1>
+            </ui:define>
+
+            <ui:define name="migasPan">
+                <li><a href="index.xhtml">Inicio</a></li>
+                <li><a href="tablaPedidos.xhtml">Gestión pedidos</a></li>
+                <li><a href="ofertas.xhtml">Ofertas</a></li>
+                <li class="active">Conductor</li>
+            </ui:define>
+
+            <ui:define name="menuConductor">
+                <li  class='current'>
+                    <a  class='current' href="registroConductor.xhtml">
+                        <span class="badge pull-right"></span>
+                        <i class="fa fa-user"></i> <span style="font-size: 15px;">Registrar conductor</span>
+                    </a>
+                </li>
+            </ui:define>
+            <ui:define name="contenido">
+                
+                 <f:metadata>
+                     <f:event type="preRenderView" listener="#{controladorVehiculo.listarVehiculos()}"/>
+                </f:metadata>
+                
+                <c:if test= "#{controladorConductor.estados == 1}">
+                    <div class="alert alert-success" role="alert">
+                        El Conductor ha sido registrado correctamente 
+                    </div>
+                </c:if>
+                <c:if test= "#{controladorConductor.estados == 2}">
+                    <div class="alert alert-danger" role="alert">
+                        El Conductor ya se encuentra registrado 
+                    </div>
+                </c:if>
+
+                <!--Formulario Registro Conductor-->
+                <h:form id="registroConductor" class="form-horizontal">
+
+                    <input name="idProveedor" type="hidden" style="display: none" value="#{controladorUsuario.objUsuarioLogin.idUsuario}"></input>
+                    <!-- Documento -->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="cedulaConductor">Documento</label>  
+                        <div class="col-md-6">
+                            <input id="cedulaConductor" name="cedulaConductor" type="text" placeholder="Digite el número de su documento" class="form-control input-md" required=""></input>
+                        </div>
+                    </div>
+
+                    <!-- Nombre-->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="nombre">Nombre</label>  
+                        <div class="col-md-6">
+                            <input id="nombre" name="nombre" type="text" placeholder="Digite su nombre" class="form-control input-md" required=""></input>
+                        </div>
+                    </div>
+
+                    <!-- Apellido-->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="apellido">Apellido</label>  
+                        <div class="col-md-6">
+                            <input id="apellido" name="apellido" type="text" placeholder="Digite su apellido" class="form-control input-md" required=""></input>
+                        </div>
+                    </div>
+
+                    <!-- Correo-->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="correo">Correo</label>  
+                        <div class="col-md-6">
+                            <input id="correo" name="correo" type="text" placeholder="Digite su correo" class="form-control input-md" required=""></input>
+                        </div>
+                    </div>
+
+                    <!-- Telefono-->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="telefono">Telefono</label>  
+                        <div class="col-md-6">
+                            <input id="telefono" name="telefono" type="text" placeholder="Digite su numero" class="form-control input-md" required=""></input>
+                        </div>
+                    </div>
+
+                    <!-- Numero Licencia-->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="numeroLicencia">Numero Licencia</label>  
+                        <div class="col-md-6">
+                            <input id="numeroLicencia" name="numeroLicencia" type="text" placeholder="Digite su numero de licencia" class="form-control input-md" required=""></input>
+                        </div>
+                    </div>
+
+
+
+                    <!-- Tipo Licencia -->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="tipoLicencia">Tipo Licencia</label>
+                        <div class="col-md-6">
+                            <select id="tipoLicencia" name="tipoLicencia" class="form-control">
+                                <option selected="true" disabled="true">--Seleccione una opción--</option>
+                                <option value="A1">A1</option>
+                                <option value="A2">A2</option>
+                                <option value="B1">B1</option>
+                                <option value="B2">B2</option>
+                                <option value="C1">C1</option>
+                                <option value="C2">C2</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="placaVehiculo">Placa Vehiculo</label>
+                        <div class="col-md-6">
+                            <select id="placaVehiculo" name="placaVehiculo" class="form-control">
+                                <option selected="true" disabled="true">--Seleccione un vehiculo--</option>
+                                  <c:forEach var="objVehiculo" items="#{controladorVehiculo.listarVehiculos()}">
+                                    <c:if test="#{controladorUsuario.objUsuarioLogin.idUsuario==objVehiculo.idProveedor.cedulaProveedor}">
+                                        <option value="#{objVehiculo.placaVehiculo}">#{objVehiculo.placaVehiculo}</option>
+                                    </c:if>
+                                </c:forEach>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!--Empresa-->
+                    <input name="empresa" type="hidden" value="#{controladorUsuario.objUsuarioLogin.proveedor.empresa}"></input>
+                    
+                    <!--Nit-->
+                    <input name="nit" type="hidden" value="#{controladorUsuario.objUsuarioLogin.proveedor.nit}"></input>
+
+                    <!-- Botones -->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="registrarConductor"></label>
+                        <div class="col-md-8">
+                            <h:commandButton id="registrarConductor" class="btn btn-success" value="Resgistrar Conductor" action="#{controladorConductor.nuevoConductor()}"></h:commandButton>
+
+                        </div>
+                    </div>
+                </h:form>
+                
+                
+                
+                
+                
+                
+            </ui:define>
+
+            <ui:define name="scripts">
+                              
+                <script src="../RecursosModulos/js/bootstrap.js" type="text/javascript"></script>
+                <script src="../RecursosModulos/js/formValidation.min.js" type="text/javascript"></script>
+                <script src="../RecursosModulos/js/Validator.js" type="text/javascript"></script>
+                <script src="../RecursosModulos/js/es_ES.js" type="text/javascript"></script>
+                
+                   <script>
+                    $().ready(function () {
+ 
+                        $('#registroConductor').formValidation({// Validación datos capa cliente. TENER PRESENTE EL ID DEL FORM
+                            err: {container: 'tooltip'}, //muestra en tooltips
+                            icon: {valid: 'fa fa-check-circle', invalid: 'fa fa-times-circle', validating: 'fa fa-refresh'}, //iconos
+                            //locale: 'es_ES', //idioma - debe enlazar el archivo "es_ES.js"
+                            fields: {
+                                cedulaConductor: {//Validar con los aributos NAME de cada INPUT
+                                    row: '.form-group',
+                                    
+                                    validators: {
+                                        notEmpty: {
+                                            message: 'Ingrese un documento válido'
+                                        },
+                                        regexp: {
+                                            regexp: /^[0-9]+$/,
+                                            message: 'Solo números'
+                                        },
+                                        stringLength: {
+                                            min: 5,
+                                            message: 'Minimo 5 caracteres'
+                                        }
+                                    }
+                                    
+                                },
+                                apellido: {//Validar con los aributos NAME de cada INPUT
+                                    row: '.form-group',
+                                    validators: {
+                                        notEmpty: {
+                                            message: 'Ingrese un nombre válido '
+ 
+                                        },
+                                        regexp: {
+                                            regexp: /^[a-zA-ZñÑáéíóúÁÉÍÓÚ]+$/,
+                                            message: 'Solo letras, sin números o caracteres especiales'
+                                        },
+                                        stringLength: {
+                                            min: 3,
+                                            message: 'Minimo 3'
+                                        }
+                                    }
+                                },
+                                
+                                correo: {//Validar con los aributos NAME de cada INPUT
+                                    row: '.form-group',
+                                    validators: {
+                                        notEmpty: {
+                                            message: 'Ingrese un correo válido'
+                                        },
+                                        regexp: {
+                                            regexp: /^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/,
+                                            message: 'No se aceptan carecteres especiales'
+                                        },
+                                        stringLength: {
+                                            min: 5,
+                                            message: 'Minimo 5 caracteres'
+                                        }
+                                    }
+                                },
+                                telefono: {//Validar con los aributos NAME de cada INPUT
+                                    row: '.form-group',
+                                    validators: {
+                                        notEmpty: {
+                                            message: 'Ingrese un telefono válido'
+                                        },
+                                        regexp: {
+                                            regexp: /^[0-9-]+$/,
+                                            message: 'Sólo numeros'
+                                        },
+                                        stringLength: {
+                                            min: 7,
+                                            message: 'Minimo 7 caracteres'
+                                        }
+                                    }
+                                },
+                                numeroLicencia: {
+                                    row: '.form-group',
+                                    validators: {
+                                        notEmpty: {
+                                            message: 'Ingrese un número válido'
+                                        },
+                                        regexp: {
+                                            regexp: /^[0-9]+$/,
+                                            message: 'Solo números'
+                                        },
+                                        stringLength: {
+                                            min: 5,
+                                            message: 'Minimo 5 caracteres'
+                                        }
+                                    }
+                                },
+                                tipoLicencia: {
+                                    row: '.form-group',
+                                    validators: {
+                                        notEmpty: {
+                                            message: 'Ingrese un tipo de licencia válido'
+                                        }
+                                    }
+                                },
+                                placaVehiculo: {
+                                    row: '.form-group',
+                                    validators: {
+                                        notEmpty: {
+                                            message: 'Ingrese un tipo de placa válido'
+                                        }
+                                    }
+                                }
+                            }
+                        });
+                    });
+ 
+ 
+                </script>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>
+
+
+

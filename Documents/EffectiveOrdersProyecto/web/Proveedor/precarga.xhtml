@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <head>
+        <title>Pre carga</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link rel='stylesheet' href='/EffectiveOrdersProyecto/RecursosModulos/css/font-awesome.min.css'></link>
+        <link rel='stylesheet' href='/EffectiveOrdersProyecto/RecursosModulos/css/estilosBase.css'></link>
+        <link rel='stylesheet' href='/EffectiveOrdersProyecto/RecursosModulos/css/bootstrap.css'></link>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    </head>
+    <body>
+
+        <!-- start:wrapper -->
+        <div id="wrapper">
+            <div class="header-top">
+                <!-- start:navbar -->
+                <nav class="navbar navbar-inverse navbar-static-top" role="navigation" style="margin-bottom: 0">
+                    <div class="container">
+                        <!-- start:navbar-header -->
+                        <div class="navbar-header">
+                            <a class="navbar-brand" href="index.html"><strong>EffectiveOrders</strong></a>
+                        </div>
+                        <!-- end:navbar-header -->
+                        <ul class="nav navbar-nav navbar-left top-menu hidden-xs">
+
+                        </ul>
+                        <ul class="nav navbar-nav navbar-right top-menu">
+                            <!-- user login dropdown start-->
+
+
+                            <li class="dropdown ">
+                                <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                                    <c:if test="#{controladorUsuario.genero==1}">
+                                        <img alt="" src="/EffectiveOrdersProyecto/RecursosModulos/images/iconos/proveedorHombre.png" width="34" height="36"></img>
+                                    </c:if>
+                                    <c:if test="#{controladorUsuario.genero==2}">
+                                        <img alt="" src="/EffectiveOrdersProyecto/RecursosModulos/images/iconos/proveedorMujer.png" width="34" height="36"></img>
+                                    </c:if>
+                                    <span class="username">#{controladorUsuario.objUsuarioLogin.nombre} #{controladorUsuario.objUsuarioLogin.apellido}</span>
+                                    <b class="caret"></b>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <div class="log-arrow-up"></div>
+                                    <li><a href="#"><i class=" fa fa-suitcase"></i>Perfil</a></li>
+                                    <div id="botoncs">
+                                        <li><h:form><h:commandLink action="#{controladorUsuario.cerrarSesion()}"><i class="fa fa-key" style="margin-left: 5px;"></i>Cerrar Sesión</h:commandLink></h:form></li>
+                                    </div>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+                <!-- end:navbar -->
+            </div>
+            <div id="barraNavegacion"></div>
+        </div>
+
+
+        <div class="row">
+            <div id="left">
+
+                <div class="col-md-3">
+                    <div class="text-center">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                    </div>
+                    <!--PARTE DEL LOGO-->
+                    <div id="menuNavegacion">
+                        <div class="side-bar-wrapper collapse navbar-collapse navbar-ex1-collapse">
+                            <a href="#" class="logo hidden-sm hidden-xs">
+                                <c:if test="#{controladorUsuario.genero==1}">
+                                    <img src="/EffectiveOrdersProyecto/RecursosModulos/images/iconos/proveedorHombre.png" width="210" height="205" alt="..." class="img-thumbnail" style="margin-top: 30px"></img>
+                                </c:if>
+                                <c:if test="#{controladorUsuario.genero==2}">
+                                    <img src="/EffectiveOrdersProyecto/RecursosModulos/images/iconos/proveedorMujer.png" width="210" height="205" alt="..." class="img-thumbnail" style="margin-top: 30px"></img>
+                                </c:if>
+                                <h3 style="text-transform: capitalize; text-shadow: 0.1em 0.1em 0.05em black;">#{controladorUsuario.objUsuarioLogin.nombre} #{controladorUsuario.objUsuarioLogin.apellido}</h3>
+                                <select id="rol" name="rol" class="form-control" required="required" onchange="location = this.value">
+                                    <c:forEach var="objRol" items="#{controladorUsuario.mostrarRoles()}">
+                                        <option value="#{objRol.rol.idRol eq 1 ? '/EffectiveOrdersProyecto/Usuario/index.xhtml':'' or objRol.rol.idRol eq 2 ? '../Cliente/index.xhtml':'' or objRol.rol.idRol eq 3 ? '../Proveedor/index.xhtml':'' or objRol.rol.idRol eq 4 ? '../Gerente/index.xhtml':''}" selected="#{objRol.rol.idRol eq 3 ? true:''}"><span id="uno"> #{objRol.rol.nombre}</span></option>
+                                    </c:forEach>
+                                </select>   
+                            </a>
+
+                            <!--Caja buscar-->
+                            <div class="search-box">
+                                <input type="text" placeholder="BUSCAR" class="form-control hidden-xs"></input>
+                            </div>
+                            <!--Menu izquierdo superior-->
+                            <ul class="side-menu side-menu-green">
+                                <ui:insert name="menuInicio">
+                                    <li>
+                                        <a  href="index.xhtml">
+                                            <span class="badge pull-right"></span>
+                                            <i class="fa fa-home"></i><span style="font-size: 14px">Inicio</span>
+                                        </a>
+                                    </li>
+                                </ui:insert>
+                            </ul>
+
+                            <!--Menu izquierdo inferior-->
+                            <div class="relative-w">
+                                <ul class="side-menu side-menu-green">
+                                    <ui:insert name="menuGestionarPedidos">
+                                        <li>
+                                            <a href="#" class="current is-dropdown-menu">
+                                                <i class="fa fa-sort-amount-desc"></i><span>Gestión Pedidos</span>
+                                            </a>
+                                            <ul style="display: none;">
+                                                <li>
+                                                    <a href="pedidos.xhtml">
+                                                        <span class="badge pull-right"></span>
+                                                        <i class="fa fa-plus-square"></i><span>
+                                                            Aportes</span>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="#">
+                                                        <span class="badge pull-right"></span>
+                                                        <i class="fa fa-shopping-cart"></i><span>
+                                                            Pedidos</span>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ui:insert>
+                                    <ui:insert name="menuOferta">
+                                        <li>
+                                            <a href="registroOferta.xhtml">
+                                                <span class="badge pull-right"></span>
+                                                <i class="fa fa-usd"></i> Registrar ofertas
+                                            </a>
+                                        </li>
+                                    </ui:insert>
+                                    <ui:insert name="menuConductor">
+                                        <li>
+                                            <a href="registroConductor.xhtml">
+                                                <span class="badge pull-right"></span>
+                                                <i class="fa fa-user"></i> <span style="font-size: 15px;">Registrar conductor</span>
+                                            </a>
+                                        </li>
+                                    </ui:insert>
+                                    <ui:insert name="menuVehiculo">
+                                        <li>
+                                            <a href="registroVehiculo.xhtml">
+                                                <span class="badge pull-right"></span>
+                                                <i class="fa fa-truck"></i> Registrar vehiculo
+                                            </a>
+                                        </li>
+                                    </ui:insert>
+                                    <ui:insert name="menuEnvio">
+                                        <li>
+                                            <a href="registroEnvio.xhtml">
+                                                <span class="badge pull-right"></span>
+                                                <i class="fa fa-road"></i> Registrar Envio
+                                            </a>
+                                        </li>
+                                    </ui:insert>
+
+                                    <ui:insert name="menuReportes">
+                                        <li>
+                                            <a href="reportes.xhtml"  class="current is-dropdown-menu">
+                                                <i class="fa fa-sort-amount-desc"></i> Reportes
+                                            </a>
+                                            <ul style="display: none;">
+                                                <li>
+                                                    <a href="tablaAportePedido.xhtml">
+                                                        <span class="badge pull-right"></span>
+                                                        <i class="fa fa-plus"></i><span>
+                                                            Aportes</span>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="tablaPedidos.xhtml">
+                                                        <span class="badge pull-right"></span>
+                                                        <i class="fa fa-shopping-cart"></i><span>
+                                                            Pedidos</span>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="tablaOfertas.xhtml">
+                                                        <span class="badge pull-right"></span>
+                                                        <i class="fa fa-usd"></i><span>
+                                                            Ofertas</span>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="tablaConductores.xhtml">
+                                                        <span class="badge pull-right"></span>
+                                                        <i class="fa fa-user"></i><span>
+                                                            Conductores</span>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="tablaEnvios1.xhtml">
+                                                        <span class="badge pull-right"></span>
+                                                        <i class="fa fa-road"></i><span>
+                                                            Envios</span>
+                                                    </a>
+                                                </li>
+
+                                            </ul>
+                                        </li>
+                                    </ui:insert>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="all-wrapper">
+                <div id="content" class="left_content">
+                    <div class="col-md-9">
+                        <!--Botones superiores-->
+                        <div class="content-wrapper ">
+                            <div class="content-inner content-inner-grey">
+                                <div class="page-header page-header-green">
+                                    <div id="fecha" class="header-links">
+                                        <script type="text/javascript"> var meses = new Array("Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"); var diasSemana = new Array("Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"); var f = new Date(); document.write(diasSemana[f.getDay()] + ", " + f.getDate() + " de " + meses[f.getMonth()] + " de " + f.getFullYear());</script>    
+                                    </div>
+                                    <ui:insert name="nombrePagina"><h1><i class="fa fa-bar-chart-o"></i> Pre-Carga</h1></ui:insert>
+                                </div>
+                                <!--Migas de pan-->
+                                <ol class="breadcrumb">
+                                    <ui:insert name="migasPan">
+                                        <li><a href="#">Inicio</a></li>
+                                        <li><a href="#">Gestión De Pedidos</a></li>
+                                        <li><a href="#">Reportes</a></li>
+                                        <li class="active">Pre-Carga</li>
+                                    </ui:insert>
+                                </ol>
+                                <!--Contenido-->
+                                <div class="main-content">
+                                    <ui:insert name="contenido">
+                                        <h2>PRE-CARGA</h2>
+                                        
+                                        
+                                        <center><h1>¡Vehiculos registrados con exito!</h1></center>
+                                        <center><h3>Hojas Cargas: #{controladorVehiculo.cantidadHojas(requestScope["libro"])}</h3></center>
+                                        <c:set var="totalUsu" value="0"></c:set>
+                                        <c:set var="totalUsuReg" value="0"></c:set>
+                                        <c:forEach end="#{controladorVehiculo.mihoja.rows - 1}" begin="1" var="fila">               
+                                            #{controladorVehiculo.miVehiculo.setMarca(controladorVehiculo.mihoja.getCell(0, fila).getContents())}
+                                            #{controladorVehiculo.miVehiculo.setPlacaVehiculo(controladorVehiculo.mihoja.getCell(1, fila).getContents())}
+                                            #{controladorVehiculo.miVehiculo.setCapacidad(controladorVehiculo.mihoja.getCell(2, fila).getContents())};
+                                            #{controladorVehiculo.miVehiculo.setTipoVehiculo(controladorVehiculo.mihoja.getCell(3, fila).getContents())};
+                                            #{controladorVehiculo.miProveedor.setEmpresa(controladorVehiculo.mihoja.getCell(4, fila).getContents())};
+                                            #{controladorVehiculo.miProveedor.setNit(controladorVehiculo.mihoja.getCell(5, fila).getContents())};
+                                            #{controladorVehiculo.nuevoVehiculoExcel()}
+                                        </c:forEach>
+
+
+
+
+                                    </ui:insert>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script type="text/javascript" src="/EffectiveOrdersProyecto/RecursosModulos/js/jquery-1.12.3.min.js"></script>
+        <script type="text/javascript" src="/EffectiveOrdersProyecto/RecursosModulos/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="/EffectiveOrdersProyecto/RecursosModulos/js/application.js"></script>
+
+
+        <ui:insert name="scripts">
+        </ui:insert>
+
+
+
+    </body>
+</html>

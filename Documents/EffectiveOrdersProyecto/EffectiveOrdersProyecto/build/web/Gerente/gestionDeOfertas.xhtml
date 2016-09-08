@@ -1,0 +1,196 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <body>
+
+        <ui:composition template="./plantillaInterfazAdministrador.xhtml">
+
+            <ui:define name="tituloPag">
+                <title>Gestión de Ofertas |EffectiveOrders</title>
+            </ui:define>
+
+
+
+            <ui:define name="menuGestionarOfertas">
+                <li class="current">
+                    <a href="gestionDeOfertas.html">
+                        <span class="badge pull-right">8</span>
+                        <i class="icon-usd"></i><span style="font-size: 14px;">Gestión de ofertas</span> 
+                    </a>
+                </li>
+            </ui:define>
+
+            <ui:define name="nombrePagina">
+                <h1 style="font-size: 23px;"><i class="icon-bar-chart"></i> Gestión de Ofertas</h1>
+
+            </ui:define>
+            <ui:define name="links">
+                <link rel='stylesheet' href='assets/css/datatables/bootstrap.datatables.css'></link>
+                <link rel='stylesheet' href='assets/css/datatables/jquery.dataTables.css'></link>          
+            </ui:define>
+            <ui:define name="migasPan">
+                <li><a href="index.xhtml">Inicio</a></li>   
+                <li><a href="gestionDeUsuarios.xhtml">Gestion de Usuarios</a></li> 
+                <li class="active">Gestion de Ofertas</li>
+            </ui:define>
+
+            <ui:define name="contenido">
+                <div class="widget">
+                    <div class="widget-content-white glossed "  id="htmlexportPDF">
+                        <div class="padded responsive-utilities-test table-responsive" >
+                            <table id="testTable" class="table table-striped table-bordered table-hover datatable" >
+                                <thead>
+                                    <tr>
+                                        <th>Código oferta</th>
+                                        <th>Proveedor</th>
+                                        <th>Producto</th>
+                                        <th>Descuento</th>
+                                        <th>Fecha inicio</th>
+                                        <th style="width: 90px">Fecha fin</th>
+                                        <th>Estado</th>
+                                        <th>Opciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <c:forEach var="objOfertas" items="#{controladorOferta.listarOfertas()}">
+
+                                        <tr>
+                                            <td>#{objOfertas.idOferta}</td>
+                                            <td>#{objOfertas.cedulaProveedor.usuario.nombre}</td>
+                                            <td>#{objOfertas.codigoProducto.nombreProducto}</td>
+                                            <td>#{objOfertas.descuento}</td>
+                                            <td>#{controladorUsuario.cambiarFechaFormato(objOfertas.fechaInicio)}</td>
+                                            <td>#{controladorUsuario.cambiarFechaFormato(objOfertas.fechaFin)}</td>
+                                            <td>
+                                                <c:if test="#{objOfertas.estado.equalsIgnoreCase('Pendiente')}">
+                                                    <span class="label label-warning">Pendiente</span>
+                                                </c:if>
+                                                <c:if test="#{objOfertas.estado.equalsIgnoreCase('Publicado')}">
+                                                    <span class="label label-success">Publicado</span>
+                                                </c:if>
+                                                <c:if test="#{objOfertas.estado.equalsIgnoreCase('Cancelado')}">
+                                                    <span class="label label-danger">Cancelado</span>
+                                                </c:if>
+                                                <c:if test="#{objOfertas.estado.equalsIgnoreCase('Finalizado')}">
+                                                    <span class="label label-info">Finalizado</span>
+                                                </c:if>
+                                            </td>
+                                            <td>
+                                                <button href="#" class="btn  btn-xs" data-toggle="modal" title="Ver datos proveedor" data-target="#verTodo#{objOfertas.cedulaProveedor.usuario.nombre}"><span class="icon-search"></span></button>
+                                                <c:if test="#{objOfertas.estado.equalsIgnoreCase('Pendiente')}">
+                                                   <button href="#" class="btn  btn-xs" data-toggle="modal" title="Publicar" data-target="#publicar#{objOfertas.idOferta}"><span class="icon-check"></span></button>
+                                                </c:if>
+                                                
+                                            </td>
+
+                                            <!-- MODAL CAMBIAR ESTADO -->
+                                            <div class="modal fade" id="publicar#{objOfertas.idOferta}" role="dialog" style="width: 1000px; margin-left: 320px; margin-top: 150px;">
+                                                <div class="modal-content" style="margin-left: 200px;">
+                                                    <!-- Modal content-->
+                                                    <div class="modal-content">
+                                                        <div class="modal-header" >
+                                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                            <h4 class="modal-title" id="title">¿ Publicar oferta: &nbsp; #{objOfertas.idOferta} ?</h4>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <div id="cancelar" style="margin-left:300px; width:150px; height: 150px;">
+                                                                <img src="assets/images/exclamation.png"></img>
+                                                            </div>
+                                                            <h6 style="font-weight: bold;">¿Está seguro de publicar la oferta?</h6>
+                                                            <br></br>
+                                                            <p>Recuerde que una vez la oferta sea publicada los clientes podrán solicitar pedidos.</p>
+                                                            <br></br>
+                                                            <h:form>
+                                                                <div id="botones" style="margin-left: 300px">
+                                                                    <h:commandButton class="btn btn-danger" value="Publicar" action="#{controladorOferta.publicarOferta(objOfertas)}" style="margin-right: 15px;" ></h:commandButton>
+                                                                    <h:commandButton class="btn btn-info" value="Salir"></h:commandButton>
+                                                                </div>
+                                                            </h:form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- FIN MODAL ESTADO-->
+
+                                        </tr> 
+                                    </c:forEach>
+                                </tbody>
+                            </table>
+                            <!-- MODAL VER TODO-->
+                            <c:forEach var="ofertas" items="#{controladorProveedor.listarProveedores()}">
+                                <div class="modal fade" id="verTodo#{ofertas.usuario.nombre}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                    <div class="modal-content" role="document" id="verTodo">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                <h4 class="modal-title" id="myModalLabel">Proveedor:&nbsp;#{ofertas.usuario.nombre}&nbsp;#{usuario.apellido}</h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="table-hover">
+                                                    <table class="table table-bordered table-responsive" align="center">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Documento</th>
+                                                                <th>Nombre</th>
+                                                                <th>Apellido</th>
+                                                                <th>Ciudad</th>
+                                                                <th>Telefono</th>
+                                                                <th>Correo</th>
+                                                                <th>Direccion</th>
+                                                                <th>Genero</th>
+                                                                <th>Estado</th>
+                                                            </tr>
+
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td>#{ofertas.usuario.idUsuario}</td>
+                                                                <td>#{ofertas.usuario.nombre}</td>                                                                
+                                                                <td>#{ofertas.usuario.apellido}</td>
+                                                                <td>#{ofertas.usuario.idCiudad.nombreCiudad}</td>
+                                                                <td>#{ofertas.usuario.telefono}</td>
+                                                                <td>#{ofertas.usuario.correo}</td>                                                                
+                                                                <td>#{ofertas.usuario.direccion}</td>
+                                                                <td>#{ofertas.usuario.genero}</td>
+                                                                <td>#{ofertas.usuario.genero==true ? 'Activo':'Inactivo'}</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- FIN MODAL VER TODO-->
+                            </c:forEach>
+
+
+
+
+
+                        </div>
+
+                        <input type="button" class="botonimagenexcel" id="excel"  onclick="tableToExcel('testTable')"></input>
+                        <input type="button" class="botonimagenpdf" id="pdf"  onclick="htmltopdf()"></input>
+                    </div>
+                    <p style="float: right; font-family: 'neoteric'; font-size: 20px; letter-spacing: 1px; font-weight: bold; margin-top: 10px;">Exportar tabla a:</p>
+                </div>
+            </ui:define>
+            <ui:define name="scripts">
+                <script src='resources/js/tables/dataTables.bootstrap.min'></script>
+                <script src='resources/js/tables/prueba.js'></script>
+                <script src='../resources/js/bootstrap.min.js'></script>
+                <script src='resources/js/tables/table.js'></script>
+                <script src='../resources/js/tooltip.js'></script>
+                <script type="text/javascript">
+                            $('button').tooltip();
+                </script>
+            </ui:define>
+        </ui:composition>
+
+    </body>
+</html>

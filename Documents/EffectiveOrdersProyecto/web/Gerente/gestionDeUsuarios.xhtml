@@ -1,0 +1,237 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <body>
+
+         <ui:composition template="./plantillaGerente.xhtml">
+
+            <ui:define name="links">
+                <link rel='stylesheet' href='../RecursosModulos/css/datatables/bootstrap.datatables.css'></link>
+                <link rel='stylesheet' href='../RecursosModulos/css/datatables/jquery.dataTables.css'></link>          
+            </ui:define>
+            <ui:define name="tituloPag">
+                <title>Gestion de Usuarios |EffectiveOrders</title>
+            </ui:define>
+
+            <ui:define name="menuGestionarUsuario">
+                <li class='current'>
+                    <a href="#" class="current is-dropdown-menu">
+
+                        <i class="fa fa-sort-amount-desc"></i><span style="font-size: 14px;">Gestión de usuarios</span>
+                    </a>
+                    <ul style="display: none;">
+                        <li>
+                            <a href="gestionDeUsuarios.xhtml">
+                                <span class="badge pull-right">15</span>
+                                <i class="fa fa-user"></i><span style="font-size: 14px;">
+                                    Usuarios</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="gestionDeClientes.xhtml">
+                                <span class="badge pull-right">15</span>
+                                <i class="fa fa-usd"></i><span style="font-size: 14px;">
+                                    Clientes</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="gestionDeProveedores.xhtml">
+                                <span class="badge pull-right">15</span>
+                                <i class="fa fa-truck"></i><span style="font-size: 14px;">
+                                    Proveedores</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ui:define>
+
+            <ui:define name="nombrePagina">
+                <h1 style="font-size: 23px;"><i class="fa fa-users"></i> Gestión de Usuarios | Usuario</h1>
+            </ui:define>
+
+            <ui:define name="migasPan">
+                <li><a href="index.xhtml">Inicio</a></li>     
+                <li><a href="gestionDeUsuarios.xhtml">Gestion de Usuarios</a></li> 
+                <li class="active">Usuarios</li>
+            </ui:define>
+
+            <ui:define name="contenido">
+                <div class="widget">
+                    <div class="widget-content-white glossed "  id="htmlexportPDF">
+                        <div class="padded responsive-utilities-test table-responsive" >
+                            <table id="testTable" class="table table-striped table-bordered table-hover datatable" >
+                                <thead>
+                                    <tr>
+                                        <th>Documento</th>
+                                        <th>Nombre</th>
+                                        <th>Apellido</th>
+                                        <th>Ciudad</th>
+                                        <th>Telefono</th>
+                                        <th>Estado</th>
+                                        <th>Opciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    
+                                    <c:forEach var="objUsuarios" items="#{controladorUsuario.leerUsuarios()}">
+                                       
+                                        <tr>
+                                            <td>#{objUsuarios.idUsuario}</td>
+                                            <td>#{objUsuarios.nombre}</td>
+                                            <td>#{objUsuarios.apellido}</td>
+                                            <td>#{objUsuarios.idCiudad.nombreCiudad}</td>
+                                            <td>#{objUsuarios.telefono}</td>
+                                            <td>
+                                                <c:if test="#{objUsuarios.estado==true}">
+                                                    <span class="label label-success">Activo</span>
+                                                </c:if>
+                                                <c:if test="#{objUsuarios.estado==false}">
+                                                    <span class="label label-danger">Inactivo</span>
+                                                </c:if>
+                                            </td>
+                                            <td>
+                                                <button href="#" class="btn  btn-xs" data-toggle="modal" title="Ver más" data-target="#verTodo#{objUsuarios.idUsuario}"><span class="fa fa-search"></span></button>
+                                                <c:if test="#{objUsuarios.estado==true}">
+                                                    <button href="#" class="btn  btn-xs" data-toggle="modal" title="Inactivar" data-target="#inactivar#{objUsuarios.idUsuario}"><span class="fa fa-times"></span></button>
+                                                </c:if>
+                                                <c:if test="#{objUsuarios.estado==false}">
+                                                    <button href="#" class="btn  btn-xs" data-toggle="modal" title="Activar" data-target="#activar#{objUsuarios.idUsuario}"><span class="fa fa-plus"></span></button>
+                                                </c:if>
+                                            </td>
+
+                                            <!-- MODAL INACTIVAR-->
+                                            <div class="modal fade" id="inactivar#{objUsuarios.idUsuario}" role="dialog" style="width: 1000px; margin-left: 320px; margin-top: 150px;">
+                                                <div class="modal-content" style="margin-left: 200px;">
+                                                    <!-- Modal content-->
+                                                    <div class="modal-content">
+                                                        <div class="modal-header" >
+                                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                            <h4 class="modal-title" id="title">¿ Inactivar usuario: &nbsp; #{objUsuarios.nombre}&nbsp;#{objUsuarios.apellido} ?</h4>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <div id="cancelar" style="margin-left:300px; width:150px; height: 150px;">
+                                                                <img src="assets/images/exclamation.png"></img>
+                                                            </div>
+                                                            <h6 style="font-weight: bold;">¿Está seguro de inactivar a el usuario?</h6>
+                                                            <br></br>
+                                                            <p>Recuerde que una vez inactivado el usuario no puede ingresar al sistema.</p>
+                                                            <br></br>
+                                                            <h:form>
+                                                                <div id="botones" style="margin-left: 300px">
+                                                                    <h:commandButton class="btn btn-danger" value="Inactivar" action="#{controladorUsuario.inactivarUsuario(objUsuarios)}" style="margin-right: 15px;" ></h:commandButton>
+                                                                    <h:commandButton class="btn btn-info" value="Salir"></h:commandButton>
+                                                                </div>
+                                                            </h:form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- FIN MODAL INACTIVAR-->
+
+                                            <!-- MODAL ACTIVAR-->
+                                            <div class="modal fade" id="activar#{objUsuarios.idUsuario}" role="dialog" style="width: 1000px; margin-left: 320px; margin-top: 150px;">
+                                                <div class="modal-content" style="margin-left: 200px;">
+                                                    <!-- Modal content-->
+                                                    <div class="modal-content">
+                                                        <div class="modal-header" >
+                                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                            <h4 class="modal-title" id="title">¿ Activar usuario: &nbsp; #{objUsuarios.nombre}&nbsp;#{objUsuarios.apellido} ?</h4>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <div id="cancelar" style="margin-left:300px; width:150px; height: 150px;">
+                                                                <img src="assets/images/exclamation.png"></img>
+                                                            </div>
+                                                            <h6 style="font-weight: bold;">¿Está seguro de activar a el usuario?</h6>
+                                                            <br></br>
+                                                            <p>Recuerde que una vez activado el usuario puede ingresar al sistema.</p>
+                                                            <br></br>
+                                                            <h:form>
+                                                                <div id="botones" style="margin-left: 300px">
+                                                                    <h:commandButton class="btn btn-danger" value="Activar" action="#{controladorUsuario.activarUsuario(objUsuarios)}" style="margin-right: 15px;" ></h:commandButton>
+                                                                    <h:commandButton class="btn btn-info" value="Salir"></h:commandButton>
+                                                                </div>
+                                                            </h:form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- FIN MODAL ACTIVAR-->
+                                        </tr>
+
+                                    </c:forEach>
+
+                                </tbody>
+                            </table>
+
+                            <!-- MODAL VER TODO-->
+                            <c:forEach var="usuario" items="#{controladorUsuario.leerUsuarios()}">
+                                <div class="modal fade" id="verTodo#{usuario.idUsuario}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                    <div class="modal-content" role="document" id="verTodo">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                <h4 class="modal-title" id="myModalLabel">Usuario:&nbsp;#{usuario.nombre}&nbsp;#{usuario.apellido}</h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="table-hover">
+                                                    <table class="table table-bordered table-responsive" align="center">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Documento</th>
+                                                                <th>Nombre</th>
+                                                                <th>Apellido</th>
+                                                                <th>Ciudad</th>
+                                                                <th>Telefono</th>
+                                                                <th>Correo</th>
+                                                                <th>Direccion</th>
+                                                                <th>Fecha nacimiento</th>
+                                                                <th>Genero</th>
+                                                            </tr>
+
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td>#{usuario.idUsuario}</td>
+                                                                <td>#{usuario.nombre}</td>                                                                
+                                                                <td>#{usuario.apellido}</td>
+                                                                <td>#{usuario.idCiudad.nombreCiudad}</td>
+                                                                <td>#{usuario.telefono}</td>
+                                                                <td>#{usuario.correo}</td>                                                                
+                                                                <td>#{usuario.direccion}</td>
+                                                                <td>#{controladorUsuario.cambiarFechaFormato(usuario.fechaDeNacimiento)}</td>
+                                                                <td>#{usuario.genero}</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- FIN MODAL VER TODO-->
+                            </c:forEach>
+
+
+
+                        </div>
+
+                        <input type="button" class="botonimagenexcel" id="excel"  onclick="tableToExcel('testTable')"></input>
+                        <input type="button" class="botonimagenpdf" id="pdf"  onclick="htmltopdf()"></input>
+                    </div>
+                    <p style="float: right; font-family: 'neoteric'; font-size: 20px; letter-spacing: 1px; font-weight: bold; margin-top: 10px;">Exportar tabla a:</p>
+                </div>
+
+            </ui:define>
+            <ui:define name="scripts">
+                <script src='../RecursosModulos/js/tables/dataTables.bootstrap.min'></script>
+                <script src='../RecursosModulos/js/tables/prueba.js'></script>
+                <script src='../RecursosModulos/js/tables/table.js'></script>
+            </ui:define>
+        </ui:composition>
+
+    </body>
+</html>
